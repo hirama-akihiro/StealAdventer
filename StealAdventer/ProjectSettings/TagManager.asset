@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - UpperHand
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - ReflectionArea
+  - Stage(FloorObject)
+  - Skill(Player)
+  - Skill(Enemy)
+  - Character(Player)
+  - Character(Enemy)
+  - NoCollision
+  - Skill(UpperHand)
+  - Stage(BreakableObject)
+  - Stage(SlashableObject)
+  - Stage(FlammableObject)
+  - Character(MutekiPlayer)
+  - Stage(BossFloorObject)
+  - BonusObject
+  - Stage(TrapObject)
+  - Character(DeadEnemy)
+  - Stage(SkillGetObject)
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
