@@ -103,7 +103,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 
 		if(isFinish)
 		{
-			if (UserInput.Instance.PressSpaceKey && !resultCanvas.activeSelf)
+			if (UserInput.Instance.PressAnyKey && !resultCanvas.activeSelf)
 			{
                 resultMessaeText.GetComponent<Text>().text = "";
                 pressMessageText.GetComponent<Text>().text = "";
@@ -114,7 +114,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 
                 //GameObject.Find("ElapsedTimeText").GetComponent<ElapsedTimeScript>().GameEnd();
             }
-			else if (UserInput.Instance.PressSpaceKey && resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed)
+			else if (UserInput.Instance.PressAnyKey && resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed)
             {
                 resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed = false;
                 AudioManager.Instance.StopAudio();

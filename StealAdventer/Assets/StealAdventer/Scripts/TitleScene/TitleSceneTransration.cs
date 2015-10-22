@@ -14,7 +14,7 @@ public class TitleSceneTransration : MonoBehaviour {
 		if (isLoadLevel) {
 			return;
 		}
-		if (UserInput.Instance.PressSpaceKey)
+		if (UserInput.Instance.PressAnyKey)
 		{
 			isLoadLevel = true;
 			// TitleScene -> StageScene

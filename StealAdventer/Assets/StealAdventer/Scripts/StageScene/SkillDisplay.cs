@@ -19,6 +19,9 @@ public class SkillDisplay : MonoBehaviour {
     /// </summary>
     private GameObject displayObject;
 
+	/// <summary>
+	/// カメラオブジェクト
+	/// </summary>
     public Camera camera;
 
     // Use this for initialization
