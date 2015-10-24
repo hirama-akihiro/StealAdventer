@@ -119,7 +119,6 @@ GameObject:
   - 54: {fileID: 5484146}
   - 65: {fileID: 6572458}
   - 114: {fileID: 11473584}
-  - 114: {fileID: 11424980}
   - 114: {fileID: 11497724}
   - 114: {fileID: 11497170}
   - 114: {fileID: 11443714}
@@ -567,18 +566,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
---- !u!114 &11424980
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b95c8c9a5659354d806f18ba7375d04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skin: {fileID: 11400000, guid: 651ce05ff1eccbd44ae00ec926dc5dc5, type: 2}
 --- !u!114 &11443714
 MonoBehaviour:
   m_ObjectHideFlags: 1

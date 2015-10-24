@@ -19,10 +19,8 @@ public class InfoSceneManager : MonoBehaviour {
 		if (UserInput.Instance.PressAnyKey)
 		{
 			isLoadLevel = true;
-			// TitleScene -> StageScene
-			AudioManager.Instance.PlayAudio("seButton");
-			//FadeManager.Instance.LoadLevel("StageScene", 0.5f);
-			Application.LoadLevel("StageScene");
+			AudioManager.Instance.PlayAudio("SEButtonClick");
+			FadeManager.Instance.LoadLevel("StageScene", 0.5f);
 		}	
 	}
 }

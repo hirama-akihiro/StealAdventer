@@ -149,7 +149,6 @@ GameObject:
   - 136: {fileID: 13688326}
   - 114: {fileID: 11490516}
   - 114: {fileID: 11414716}
-  - 114: {fileID: 11430136}
   - 114: {fileID: 11409258}
   - 114: {fileID: 11494502}
   m_Layer: 13
@@ -1841,18 +1840,6 @@ MonoBehaviour:
   ySpeed: 3
   jumpPower: 7
   skillObject: {fileID: 0}
---- !u!114 &11430136
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b95c8c9a5659354d806f18ba7375d04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skin: {fileID: 11400000, guid: 651ce05ff1eccbd44ae00ec926dc5dc5, type: 2}
 --- !u!114 &11490516
 MonoBehaviour:
   m_ObjectHideFlags: 1

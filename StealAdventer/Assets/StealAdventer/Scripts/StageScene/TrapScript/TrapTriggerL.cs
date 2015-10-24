@@ -5,11 +5,14 @@ public class TrapTriggerL : MonoBehaviour {
 
 	leftRotateScript left;
 	
-	public GameObject[] leftfloors;
+	/// <summary>
+	/// 左側フロアー
+	/// </summary>
+	public GameObject[] leftFloors;
 	
 	// Use this for initialization
 	void Start () {
-		left = new leftRotateScript ();
+		left = gameObject.AddComponent<leftRotateScript> ();
 	}
 	
 	// Update is called once per frame
@@ -19,12 +22,8 @@ public class TrapTriggerL : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		foreach (GameObject leftfloor in leftfloors) {
+		foreach (GameObject leftfloor in leftFloors) {
 			leftfloor.GetComponent<leftRotateScript>().IsTrapOn = true;
 		}
-		
-		//Debug.Log ("true");
-		//left.Rotate ();
-		//right.Rotate ();
 	}
 }

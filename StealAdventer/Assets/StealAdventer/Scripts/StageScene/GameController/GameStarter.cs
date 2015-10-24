@@ -23,7 +23,7 @@ public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		AudioManager.Instance.PlayAudio("Fight", AudioManager.PlayMode.Repeat);
+		AudioManager.Instance.PlayAudio("BGMFight", AudioManager.PlayMode.Repeat);
 		timer = 4f;
 	}
 	

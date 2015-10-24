@@ -2,14 +2,12 @@
 using System.Collections;
 
 public class TriggerScriptF : MonoBehaviour {
-
-	CylinderGenerator cylinderGenerator;
 	
 	public GameObject CG;
 	
 	// Use this for initialization
 	void Start () {
-		cylinderGenerator = new CylinderGenerator ();
+
 	}
 	
 	// Update is called once per frame
@@ -23,8 +21,6 @@ public class TriggerScriptF : MonoBehaviour {
 		if(layerName == LayerNames.Player || layerName == LayerNames.MutekiPlayer)
 		{
 			CG.GetComponent<CylinderGenerator> ().IsTrapOn = false;
-			
-			//Debug.Log ("false");
 		}
 	}
 }
