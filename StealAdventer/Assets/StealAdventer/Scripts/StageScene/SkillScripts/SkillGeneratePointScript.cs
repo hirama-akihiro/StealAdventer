@@ -18,7 +18,6 @@ public class SkillGeneratePointScript: MonoBehaviour
 	/// </summary>
 	private GameObject cpyStealHand;
 
-
 	/// <summary>
 	/// スキル発射オブジェクト
 	/// </summary>

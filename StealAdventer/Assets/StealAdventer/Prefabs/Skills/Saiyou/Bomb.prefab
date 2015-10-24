@@ -39,8 +39,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643666cbf816902448addc40c0a384b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackSkilObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
-  DisplaySkillObject: {fileID: 159306, guid: 74a9b5f9dc6915344b6c2504dbe86875, type: 2}
+  attackSkilObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
+  displaySkillObject: {fileID: 159306, guid: 74a9b5f9dc6915344b6c2504dbe86875, type: 2}
   SkilImage: {fileID: 2800000, guid: 4ce6f85992eb75c4eb445d779c194f86, type: 3}
 --- !u!1001 &100100000
 Prefab:
@@ -48,7 +48,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: attackSkilObject
+      value: 
+      objectReference: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: displaySkillObject
+      value: 
+      objectReference: {fileID: 159306, guid: 74a9b5f9dc6915344b6c2504dbe86875, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160470}
