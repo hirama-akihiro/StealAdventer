@@ -81,7 +81,7 @@ public class Rock : MonoBehaviour {
     {
         this.spawn = spawn;
         gameObject.transform.position = this.spawn.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
-        power_x = Mathf.Cos(Mathf.PI / 180.0f * degree) * (int)this.spawn.GetComponent<CharacterStatus>().NowAngle * power;
+        power_x = Mathf.Cos(Mathf.PI / 180.0f * degree) * (int)this.spawn.GetComponent<Character>().NowAngle * power;
         power_y = Mathf.Sin(Mathf.PI / 180.0f * degree) * power;
         gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(power_x, power_y, 0));
     }

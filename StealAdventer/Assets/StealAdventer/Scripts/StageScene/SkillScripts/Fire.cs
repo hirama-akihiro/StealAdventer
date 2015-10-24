@@ -39,7 +39,7 @@ public class Fire : MonoBehaviour {
 	{
 		if (Input.GetKey(KeyCode.S))
 		{
-			transform.position = new Vector3(spawn.transform.position.x + (int)spawn.GetComponent<CharacterStatus>().NowAngle, spawn.transform.position.y + 0.5f, 0);
+			transform.position = new Vector3(spawn.transform.position.x + (int)spawn.GetComponent<Character>().NowAngle, spawn.transform.position.y + 0.5f, 0);
 			transform.rotation = spawn.transform.rotation;
 			transform.Rotate(0.0f, 90.0f, 90.0f);
 		}

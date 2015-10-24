@@ -50,8 +50,8 @@ public class HealItemScript : MonoBehaviour {
 		if(LayerMask.LayerToName(c.gameObject.layer) == LayerNames.Player || LayerMask.LayerToName(c.gameObject.layer) == LayerNames.MutekiPlayer)
         {
             GameObject effect;
-            int hp = c.gameObject.GetComponent<CharacterStatus>().nowHP + healValue;
-            c.gameObject.GetComponent<CharacterStatus>().nowHP = Mathf.Min(hp, c.gameObject.GetComponent<CharacterStatus>().maxHP);
+            int hp = c.gameObject.GetComponent<Character>().nowHP + healValue;
+            c.gameObject.GetComponent<Character>().nowHP = Mathf.Min(hp, c.gameObject.GetComponent<Character>().maxHP);
             effect = (GameObject)Instantiate(healEffect, c.gameObject.transform.position, healEffect.transform.rotation);
             effect.GetComponent<HealEffectScript>().SetPlayer(c.gameObject);
             Destroy(effect, 1.50f);

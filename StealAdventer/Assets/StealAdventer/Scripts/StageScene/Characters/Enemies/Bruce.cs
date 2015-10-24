@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bruce : MonoBehaviour {
+public class Bruce : Enemy {
 
 	/// <summary>
 	/// animation
@@ -27,12 +27,6 @@ public class Bruce : MonoBehaviour {
 	#endregion
 
 	#region Field
-
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	private CharacterStatus status;
-	
 	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
@@ -82,11 +76,8 @@ public class Bruce : MonoBehaviour {
 	#region 計測用変数
 	private float deathTime = 2;
 	private float attackTimer;
-	private float startAttack = 8;
 	private bool isAttack = false;
-	private bool isRunning = false;
 	private int attackPatern;
-	private bool active = false;
 	#endregion
 	
 	public float blinkerInterval;
@@ -99,11 +90,8 @@ public class Bruce : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		myAnimation = GetComponent<Animation> ();
-		//myAnimation ["Take 0010"].normalizedTime = stop_s;
-		//anime ["Take 0010"].normalizedSpeed = animeSpeed;
-		status = GetComponent<CharacterStatus>();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
-		status.NowState = (int)CharacterState.Idling;
+		nowAngle = CharacterAngle.Right;
+		nowState = (int)CharacterState.Idling;
 		myRigidBody = GetComponent<Rigidbody> ();
 		capsuleCollider = GetComponent<CapsuleCollider> ();
 		player = GameObject.Find("SDUnityChan");
@@ -112,9 +100,9 @@ public class Bruce : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (status.nowHP <= 0)
+		if (nowHP <= 0)
 		{
-			status.contactDamage = 0;
+			contactDamage = 0;
 			gameObject.layer = LayerMask.NameToLayer("Character(DeadEnemy)");
 		}
 
@@ -144,7 +132,7 @@ public class Bruce : MonoBehaviour {
 			}
 		}
 		
-		switch (status.NowState) {
+		switch (nowState) {
 		case (int)CharacterState.Idling:
 		{
 			CheckAngle();
@@ -155,7 +143,7 @@ public class Bruce : MonoBehaviour {
 				myAnimation["Take 0010"].speed = 1;
 
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 5 && attackTimer < 0){
-				status.NowState = (int)CharacterState.Moving;
+				nowState = (int)CharacterState.Moving;
 				//myAnimation["Take 0010"].speed = 1;
 			}
 
@@ -165,16 +153,16 @@ public class Bruce : MonoBehaviour {
 		{
 			CheckAngle();
 			myAnimation.Play("Run");
-			transform.position = new Vector3(transform.position.x + (status.xSpeed / 80) * (float)status.NowAngle, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + (xSpeed / 80) * (float)nowAngle, transform.position.y, transform.position.z);
 
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 2) {
-				status.NowState = (int)CharacterState.Attacking;
+				nowState = (int)CharacterState.Attacking;
 				SelectAttack();
 				CheckAngle();
 				myAnimation["Take 0010"].speed = 1;
 			}
 			if(Mathf.Abs (this.transform.position.x - player.transform.position.x) >= 10){
-				status.NowState = (int)CharacterState.Idling;
+				nowState = (int)CharacterState.Idling;
 				myAnimation["Take 0010"].normalizedTime = stop_s;
 				attackTimer = 0.2f;
 				myAnimation["Take 0010"].speed = 1;
@@ -194,7 +182,7 @@ public class Bruce : MonoBehaviour {
 
 				//攻撃終了
 				if(myAnimation["Take 0010"].normalizedTime > scissor_e){
-					status.NowState = (int)CharacterState.Moving;
+					nowState = (int)CharacterState.Moving;
 					myAnimation["Take 0010"].normalizedTime = stop_s;
 					attackTimer = 0.2f;
 					myAnimation["Take 0010"].speed = 1;
@@ -227,11 +215,11 @@ public class Bruce : MonoBehaviour {
 		}
 		
 		//死亡
-		if (status.NowHP <= 0 && status.NowState != (int)CharacterState.Death)
+		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
-			status.NowState = (int)CharacterState.Death;
+			nowState = (int)CharacterState.Death;
 			myAnimation.Play("Take 0010");
 			myAnimation["Take 0010"].normalizedTime = death_s;
 		}
@@ -243,10 +231,10 @@ public class Bruce : MonoBehaviour {
 
 	void CheckAngle(){
 		if (player.transform.position.x > transform.position.x) {
-			status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			nowAngle = CharacterAngle.Right;
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		} else {
-			status.NowAngle = CharacterStatus.CharacterAngle.Left;
+			nowAngle = CharacterAngle.Left;
 			transform.rotation = Quaternion.Euler(0, 270, 0);
 		}
 	}
@@ -278,10 +266,10 @@ public class Bruce : MonoBehaviour {
 		string layerName = LayerMask.LayerToName (c.gameObject.layer);
 		if (layerName == "ReflectionArea") {
 			transform.Rotate (0, 180, 0);
-			if (status.NowAngle == CharacterStatus.CharacterAngle.Left)
-				status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			if (nowAngle == CharacterAngle.Left)
+				nowAngle = CharacterAngle.Right;
 			else
-				status.NowAngle = CharacterStatus.CharacterAngle.Left;
+				nowAngle = CharacterAngle.Left;
 		}
 	}
 	
@@ -292,7 +280,7 @@ public class Bruce : MonoBehaviour {
 		{
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
 				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
 			}
 		}

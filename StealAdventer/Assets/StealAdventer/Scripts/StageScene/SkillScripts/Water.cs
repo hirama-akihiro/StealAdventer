@@ -40,7 +40,7 @@ public class Water : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position = new Vector3(spawn.transform.position.x + ((int)spawn.GetComponent<CharacterStatus>().NowAngle * 2.0f), spawn.transform.position.y + 0.5f, spawn.transform.position.z);
+            transform.position = new Vector3(spawn.transform.position.x + ((int)spawn.GetComponent<Character>().NowAngle * 2.0f), spawn.transform.position.y + 0.5f, spawn.transform.position.z);
             transform.rotation = spawn.transform.rotation;
             transform.Rotate(0, 0, 90f);
         }

@@ -20,7 +20,7 @@ public class DestroyArea : MonoBehaviour {
 		{
 			if (!collider.gameObject.GetComponent<UnityChanController>().IsWorping)
 			{
-				collider.gameObject.GetComponent<CharacterStatus>().nowHP = -1;
+				collider.gameObject.GetComponent<Character>().nowHP = -1;
 			}
 		}
 		if (layerName == LayerNames.NormalEnemy)

@@ -148,7 +148,6 @@ GameObject:
   - 54: {fileID: 5441544}
   - 136: {fileID: 13688326}
   - 114: {fileID: 11490516}
-  - 114: {fileID: 11414716}
   - 114: {fileID: 11409258}
   - 114: {fileID: 11494502}
   m_Layer: 13
@@ -1794,7 +1793,7 @@ Animation:
   m_GameObject: {fileID: 113520}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400002, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
+  m_Animation: {fileID: 7400008, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
   - {fileID: 7400002, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
@@ -1805,6 +1804,7 @@ Animation:
   - {fileID: 7400012, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
   - {fileID: 7400014, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
   - {fileID: 7400016, guid: 8ba535c70bbcf7b46b0cba1188faae47, type: 3}
+  - {fileID: 7400008, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -1822,24 +1822,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orgStealHand: {fileID: 0}
   spawn: {fileID: 435930}
---- !u!114 &11414716
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 30
-  nowHP: 0
-  contactDamage: 5
-  xSpeed: 2
-  ySpeed: 3
-  jumpPower: 7
-  skillObject: {fileID: 0}
 --- !u!114 &11490516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1851,6 +1833,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b362287cdb47e428e87a27e6bd6437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 30
+  nowHP: 0
+  contactDamage: 5
+  xSpeed: 2
+  ySpeed: 3
+  jumpPower: 7
+  skillObject: {fileID: 0}
   stone: {fileID: 150878, guid: 5ffa06588ebb04345b03743575b7f520, type: 2}
   punch: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
@@ -1972,6 +1961,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: m_Animations.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: X_Area
       value: 30
       objectReference: {fileID: 0}
@@ -2003,6 +1996,22 @@ Prefab:
       propertyPath: dropProb
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: xSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: jumpPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400008, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113520}

@@ -442,7 +442,6 @@ GameObject:
   - 136: {fileID: 13631706}
   - 114: {fileID: 11476106}
   - 114: {fileID: 11495034}
-  - 114: {fileID: 11484460}
   - 114: {fileID: 11480878}
   m_Layer: 13
   m_Name: bruce
@@ -1637,6 +1636,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c103c2d2693c7134b9e322f6cfb2beaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 20
+  nowHP: 0
+  contactDamage: 10
+  xSpeed: 6
+  ySpeed: 3
+  jumpPower: 7
+  skillObject: {fileID: 131494, guid: 9c0d4df700c1da44a99b4bc7cc260a72, type: 2}
   slash: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
   dropItem: {fileID: 164682, guid: 020821c391aa586429345dd56bf7c91e, type: 2}
@@ -1656,24 +1662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   X_Area: 30
   Y_Area: 50
---- !u!114 &11484460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 154922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 20
-  nowHP: 0
-  contactDamage: 10
-  xSpeed: 6
-  ySpeed: 3
-  jumpPower: 7
-  skillObject: {fileID: 131494, guid: 9c0d4df700c1da44a99b4bc7cc260a72, type: 2}
 --- !u!114 &11495034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1806,6 +1794,26 @@ Prefab:
       propertyPath: dropProb
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: contactDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: xSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: jumpPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: skillObject
+      value: 
+      objectReference: {fileID: 131494, guid: 9c0d4df700c1da44a99b4bc7cc260a72, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 154922}

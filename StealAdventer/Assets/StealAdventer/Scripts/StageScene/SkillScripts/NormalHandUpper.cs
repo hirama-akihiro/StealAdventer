@@ -42,7 +42,7 @@ public class NormalHandUpper : MonoBehaviour {
 	void Update()
 	{
 		nowRotate += rotateSpeed * Time.deltaTime;
-		int sign = (int)playerObject.GetComponent<UnityChanController>().status.NowAngle;
+		int sign = (int)playerObject.GetComponent<UnityChanController>().NowAngle;
 		transform.position = playerObject.transform.position + sign * offset + new Vector3(sign * 0.4f * Mathf.Sin(nowRotate * Mathf.Deg2Rad), -2 * Mathf.Cos(nowRotate * Mathf.Deg2Rad), 0);
 		transform.Rotate(0, rotateSpeed * Time.deltaTime * 0.5f, 0);
 

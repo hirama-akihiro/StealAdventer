@@ -30,7 +30,7 @@ public class SkillGetObject : MonoBehaviour {
 		{
 			if (skillObjet)
 			{
-				collider.gameObject.GetComponent<CharacterStatus>().skillObject = skillObjet;
+				collider.gameObject.GetComponent<Character>().skillObject = skillObjet;
 				dataCanvas.transform.FindChild("Skill").GetComponent<SkillImageScript>().ChangeSkillImage();
 				collider.gameObject.SendMessage("InstansiateGetSkillEffect");
 				AudioManager.Instance.PlayAudio("SkillGet");

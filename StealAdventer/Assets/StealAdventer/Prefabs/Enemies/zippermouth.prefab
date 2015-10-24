@@ -136,7 +136,6 @@ GameObject:
   - 135: {fileID: 13591300}
   - 114: {fileID: 11432348}
   - 114: {fileID: 11482614}
-  - 114: {fileID: 11442180}
   - 114: {fileID: 11413172}
   m_Layer: 13
   m_Name: zippermouth
@@ -431,30 +430,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc425ce344908946948fb95d0458f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  nowHP: 0
+  contactDamage: 0
+  xSpeed: 0
+  ySpeed: 0
+  jumpPower: 0
+  skillObject: {fileID: 174520, guid: e73d3c61bfd9ae74eb7c68df962f7f46, type: 2}
   skillObject: {fileID: 174520, guid: e73d3c61bfd9ae74eb7c68df962f7f46, type: 2}
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
   dropItem: {fileID: 164682, guid: 020821c391aa586429345dd56bf7c91e, type: 2}
   blinkerInterval: 0
   mutekiTime: 0
   dropProb: 4
---- !u!114 &11442180
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 5
-  nowHP: 0
-  contactDamage: 5
-  xSpeed: 1.5
-  ySpeed: 3
-  jumpPower: 7
-  skillObject: {fileID: 155218, guid: e776191a7b4ee4844a0440155eaf5a6f, type: 2}
 --- !u!114 &11482614
 MonoBehaviour:
   m_ObjectHideFlags: 1

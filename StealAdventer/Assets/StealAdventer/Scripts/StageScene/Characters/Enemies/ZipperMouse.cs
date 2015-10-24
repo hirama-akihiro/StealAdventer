@@ -1,14 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ZipperMouse : MonoBehaviour {
+public class ZipperMouse : Enemy {
 	
 	#region Field
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	private CharacterStatus status;
-	
 	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
@@ -64,9 +59,8 @@ public class ZipperMouse : MonoBehaviour {
 	#endregion
 	
 	void Start(){
-		status = GetComponent<CharacterStatus>();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
-		status.NowState = (int)CharacterState.Moving;
+		nowAngle = CharacterAngle.Right;
+		nowState = (int)CharacterState.Moving;
 		myAnimation = GetComponent<Animation>();
 		myRigidBody = GetComponent<Rigidbody> ();
 		player = GameObject.Find("SDUnityChan");
@@ -76,9 +70,9 @@ public class ZipperMouse : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (status.nowHP <= 0)
+		if (nowHP <= 0)
 		{
-			status.contactDamage = 0;
+			contactDamage = 0;
 			gameObject.layer = LayerMask.NameToLayer("Character(DeadEnemy)");
 		}
 
@@ -108,14 +102,14 @@ public class ZipperMouse : MonoBehaviour {
 			}
 		}
 		
-		switch (status.NowState) {
+		switch (nowState) {
 		case (int)CharacterState.Moving:
 		{
 			isAttack = false;
 			myAnimation.Play("run");
-			transform.position = new Vector3(transform.position.x + (status.xSpeed / 40) * (float)status.NowAngle, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + (xSpeed / 40) * (float)nowAngle, transform.position.y, transform.position.z);
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 3 && attackTimer <= 0) {
-				status.NowState = (int)CharacterState.Attacking;
+				nowState = (int)CharacterState.Attacking;
 				attackTimer = startAttack;
 				myAnimation.Play("attack");
 			}
@@ -131,7 +125,7 @@ public class ZipperMouse : MonoBehaviour {
 			
 			//移動モードに移行
 			if(myAnimation["attack"].time > myAnimation["attack"].length){
-				status.NowState = (int)CharacterState.Moving;
+				nowState = (int)CharacterState.Moving;
 			}
 			break;
 		}
@@ -153,11 +147,11 @@ public class ZipperMouse : MonoBehaviour {
 		}
 
 		//死亡
-		if (status.NowHP <= 0 && status.NowState != (int)CharacterState.Death)
+		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
-			status.NowState = (int)CharacterState.Death;
+			nowState = (int)CharacterState.Death;
 			transform.rotation = Quaternion.Euler(180, 90, 0);
 			transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
 		}
@@ -172,10 +166,10 @@ public class ZipperMouse : MonoBehaviour {
 		string layerName = LayerMask.LayerToName (c.gameObject.layer);
 		if (layerName == "ReflectionArea") {
 			transform.Rotate (0, 180, 0);
-			if (status.NowAngle == CharacterStatus.CharacterAngle.Left)
-				status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			if (nowAngle == CharacterAngle.Left)
+				nowAngle = CharacterAngle.Right;
 			else
-				status.NowAngle = CharacterStatus.CharacterAngle.Left;
+				nowAngle = CharacterAngle.Left;
 		}
 	}
 	
@@ -186,7 +180,7 @@ public class ZipperMouse : MonoBehaviour {
 		{
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
 				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
 			}
 		}

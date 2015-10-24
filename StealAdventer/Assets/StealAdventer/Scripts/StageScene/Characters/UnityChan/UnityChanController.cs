@@ -5,12 +5,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
-public class UnityChanController : UnityChanBase {
-
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	public CharacterStatus status;
+public class UnityChanController : Player {
 
 	/// <summary>
 	/// 残機数
@@ -103,9 +98,8 @@ public class UnityChanController : UnityChanBase {
 	{
 		base.Awake();
 		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
-		status = GetComponent<CharacterStatus>();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
-		status.NowState = (int)CharacterState.Idling;
+		nowAngle = CharacterAngle.Right;
+		nowState = (int)CharacterState.Idling;
 		coolTimeImage = coolTimeRateObject.GetComponent<Image>();
 		myAnimator = GetComponent<Animator>();
 		myRigidbody = GetComponent<Rigidbody>();
@@ -125,7 +119,7 @@ public class UnityChanController : UnityChanBase {
 		base.Update();
 
 		// 体力が0の時にリスポーンする
-		if (status.nowHP < 0 && mutekiTime < 0)
+		if (nowHP < 0 && mutekiTime < 0)
 		{
 			stock--;
 			ScoreManager.Instance.PlayerDead();
@@ -165,8 +159,8 @@ public class UnityChanController : UnityChanBase {
 	protected override void OnNoMove()
 	{
 		isRun = false;
-		status.NowState = (int)CharacterState.Idling;
-		CharacterMove(0, status.NowAngle);
+		nowState = (int)CharacterState.Idling;
+		CharacterMove(0, nowAngle);
 	}
 
 	protected override void OnMove()
@@ -174,10 +168,10 @@ public class UnityChanController : UnityChanBase {
 		if (!isMovable) { return; }
 
 		isRun = true;
-		if (UserInput.Instance.UnityChanLeftMove) { status.NowAngle = CharacterStatus.CharacterAngle.Left; }
-		else { status.NowAngle = CharacterStatus.CharacterAngle.Right; }
-		CharacterRotateAngle(status.NowAngle);
-		CharacterMove(status.xSpeed, status.NowAngle);
+		if (UserInput.Instance.UnityChanLeftMove) { nowAngle = CharacterAngle.Left; }
+		else { nowAngle = CharacterAngle.Right; }
+		CharacterRotateAngle(nowAngle);
+		CharacterMove(xSpeed, nowAngle);
 		
 	}
 
@@ -188,9 +182,9 @@ public class UnityChanController : UnityChanBase {
 	{
 		if (isJump || !isMovable) { return; }
 
-		status.NowState = (int)CharacterState.Jumping;
+		nowState = (int)CharacterState.Jumping;
 		isJump = true;
-		myRigidbody.AddForce(transform.up * status.jumpPower, ForceMode.Impulse);
+		myRigidbody.AddForce(transform.up * jumpPower, ForceMode.Impulse);
 		SEManager.Instance.PlayAudio("JumpVoice");
 	}
 
@@ -199,17 +193,17 @@ public class UnityChanController : UnityChanBase {
 	/// </summary>
 	protected override void OnSkillAttack()
 	{
-		if (nowCoolTime > 0 || status.skillObject == null || !isMovable) { return; }
+		if (nowCoolTime > 0 || skillObject == null || !isMovable) { return; }
 		if (IsWorping) { return; }
 
-		status.NowState = (int)CharacterState.SkillAttack;
-		skillGeneratePoint.GenerateSkill(status.skillObject.GetComponent<SkillObjectScript>().AttackSkilObject, LayerNames.PlayerSkill);
-		maxCoolTime = status.skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().coolTime;
+		nowState = (int)CharacterState.SkillAttack;
+		skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().AttackSkilObject, LayerNames.PlayerSkill);
+		maxCoolTime = skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().coolTime;
 		nowCoolTime = maxCoolTime;
-		if (status.skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().skillType == SkillParam.SkillType.Long)
+		if (skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().skillType == SkillParam.SkillType.Long)
 		{
 			isMovable = false;
-			CharacterMove(0, status.NowAngle);
+			CharacterMove(0, nowAngle);
 			AudioManager.Instance.PlayAudio("LongSkillvoice");
 		}
 		else { AudioManager.Instance.PlayAudio("ShortSkillVoice"); }	
@@ -230,9 +224,9 @@ public class UnityChanController : UnityChanBase {
 	{
 		if (isJump || !isMovable) { return; }
 
-		status.NowState = (int)CharacterState.StealAttack;
+		nowState = (int)CharacterState.StealAttack;
 		skillGeneratePoint.GenerateStealHand();
-		CharacterMove(0, status.NowAngle);
+		CharacterMove(0, nowAngle);
 		IsControllable = false;
 		isMovable = false;
 		isRun = false;
@@ -246,10 +240,10 @@ public class UnityChanController : UnityChanBase {
 	{
 		if (nowUpperCoolTime > 0) { return; }
 
-		status.NowState = (int)CharacterState.NormalAttack;
+		nowState = (int)CharacterState.NormalAttack;
 		GameObject upperPos = GameObject.Find("UpperPoint");
 		GameObject hand = Instantiate(normalHandUpper) as GameObject;
-		if (status.NowAngle == CharacterStatus.CharacterAngle.Left)
+		if (nowAngle == CharacterAngle.Left)
 		{
 			//hand.transform.position += new Vector3(0, 0, -1);
 			hand.transform.Rotate(180, 0, 0);
@@ -278,7 +272,7 @@ public class UnityChanController : UnityChanBase {
 		}
 		else if(layerName == LayerNames.BossEnemy || layerName == LayerNames.NormalEnemy)
 		{
-			DamegeMethod(collision.gameObject.GetComponent<CharacterStatus>().contactDamage);
+			DamegeMethod(collision.gameObject.GetComponent<Character>().contactDamage);
 		}
 
 	}
@@ -293,7 +287,7 @@ public class UnityChanController : UnityChanBase {
 		if (layerName == LayerNames.Stage_FloorObject)
 		{
 			// 静止状態なら移動速度を止める(横方向のみ)
-			if (status.NowState == (int)CharacterState.Idling)
+			if (nowState == (int)CharacterState.Idling)
 			{
 				myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y, myRigidbody.velocity.z);
 			}
@@ -319,12 +313,12 @@ public class UnityChanController : UnityChanBase {
 		if (damege <= 0) { return; }
 
 		myRigidbody.isKinematic = true;
-		status.NowHP -= damege;
+		nowHP -= damege;
 		ScoreManager.Instance.AddDamagedScore(damege);
 		mutekiTime = 1;
 		AudioManager.Instance.PlayAudio("DamageVoice");
 		myRigidbody.isKinematic = false;
-		if (status.nowHP > 0) { StartCoroutine("MutekiFlashing"); }
+		if (nowHP > 0) { StartCoroutine("MutekiFlashing"); }
 		else { mutekiTime = -1; }
 	}
 
@@ -332,14 +326,14 @@ public class UnityChanController : UnityChanBase {
 	/// キャラクターの向きをAngleで決定
 	/// </summary>
 	/// <param name="angle"></param>
-	private void CharacterRotateAngle(CharacterStatus.CharacterAngle angle)
+	private void CharacterRotateAngle(CharacterAngle angle)
 	{
 		switch(angle)
 		{
-			case CharacterStatus.CharacterAngle.Left:
+			case CharacterAngle.Left:
 				transform.rotation = Quaternion.Euler(0, 270, 0);
 				break;
-			case CharacterStatus.CharacterAngle.Right:
+			case CharacterAngle.Right:
 				transform.rotation = Quaternion.Euler(0, 90, 0);
 				break;
 		}
@@ -350,10 +344,10 @@ public class UnityChanController : UnityChanBase {
 	/// </summary>
 	/// <param name="xSpeed"></param>
 	/// <param name="angle"></param>
-	private void CharacterMove(float xSpeed, CharacterStatus.CharacterAngle angle)
+	private void CharacterMove(float xSpeed, CharacterAngle angle)
 	{
 		Vector3 velocity = myRigidbody.velocity;
-		myRigidbody.velocity = new Vector3((int)status.NowAngle * xSpeed, velocity.y, velocity.z);
+		myRigidbody.velocity = new Vector3((int)NowAngle * xSpeed, velocity.y, velocity.z);
 	}
 
 	/// <summary>
@@ -403,24 +397,15 @@ public class UnityChanController : UnityChanBase {
 		return myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f;
 	}
 
-	public void FullHeal() { status.nowHP = status.maxHP; }
+	public void FullHeal() { nowHP = maxHP; }
 
 	#region ManagerClassCallMethod
-	/// <summary>
-	/// ゲーム開始時のメソッド
-	/// </summary>
-	public void GameStart() { enabled = true; }
-
-	/// <summary>
-	/// ゲーム終了時のメソッド
-	/// </summary>
-	public void GameEnd() { enabled = false; }
 
 	/// <summary>
 	/// プレイヤーが死んでいるかどうか
 	/// </summary>
 	/// <returns></returns>
-	public bool IsDestroy() { return stock <= 0 && status.nowHP <= 0; }
+	public override bool IsDestroy { get{ return stock <= 0 && nowHP <= 0; } }
 	
 	/// <summary>
 	/// アニメーションを外側から操作する関数

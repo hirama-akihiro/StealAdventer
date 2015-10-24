@@ -43,8 +43,7 @@ public class HPGauge : MonoBehaviour {
     void Start () {
         if (gameObject.activeInHierarchy && character != null)
         {
-            gauge.maxValue = character.GetComponent<CharacterStatus>().maxHP;
-            //hpBeforeChange = character.GetComponent<CharacterStatus>().nowHP;
+            gauge.maxValue = character.GetComponent<Character>().maxHP;
         }
         hpBeforeChange = 0;
         gauge.value = 0.0f;
@@ -63,10 +62,10 @@ public class HPGauge : MonoBehaviour {
 
     private void HPChange()
     {
-        if (gameObject.activeInHierarchy && character != null && gauge.value != character.GetComponent<CharacterStatus>().nowHP && hpBeforeChange != character.GetComponent<CharacterStatus>().nowHP && !hpChanging)
+        if (gameObject.activeInHierarchy && character != null && gauge.value != character.GetComponent<Character>().nowHP && hpBeforeChange != character.GetComponent<Character>().nowHP && !hpChanging)
         {
             hpChanging = true;
-            hpBeforeChange = character.GetComponent<CharacterStatus>().nowHP;
+            hpBeforeChange = character.GetComponent<Character>().nowHP;
             hpChangeValue = (gauge.value - hpBeforeChange) / gaugeChangeTime * Time.deltaTime;
         }
 
@@ -76,12 +75,12 @@ public class HPGauge : MonoBehaviour {
             timeSinceBeginHPChanged += Time.deltaTime;
             //Debug.Log(gauge.value + " " + character.GetComponent<CharacterStatus>().nowHP);
             
-            if (timeSinceBeginHPChanged >= gaugeChangeTime || Mathf.Abs(gauge.value - character.GetComponent<CharacterStatus>().nowHP) < hpChangeValue)
+            if (timeSinceBeginHPChanged >= gaugeChangeTime || Mathf.Abs(gauge.value - character.GetComponent<Character>().nowHP) < hpChangeValue)
             {
                 hpChanging = false;
                 timeSinceBeginHPChanged = 0.0f;
-                hpBeforeChange = character.GetComponent<CharacterStatus>().nowHP;
-                gauge.value = character.GetComponent<CharacterStatus>().nowHP;
+                hpBeforeChange = character.GetComponent<Character>().nowHP;
+                gauge.value = character.GetComponent<Character>().nowHP;
             }
             
         }
@@ -95,9 +94,9 @@ public class HPGauge : MonoBehaviour {
         gameObject.SetActive(true);
 
         this.character = character;
-		gauge.maxValue = character.GetComponent<CharacterStatus>().maxHP;
+		gauge.maxValue = character.GetComponent<Character>().maxHP;
         gauge.minValue = 0.0f;
-        hpBeforeChange = character.GetComponent<CharacterStatus>().nowHP;
+        hpBeforeChange = character.GetComponent<Character>().nowHP;
     }
 
     /// <summary>

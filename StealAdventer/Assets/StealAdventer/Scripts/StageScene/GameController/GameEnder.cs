@@ -49,16 +49,11 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 		// ゲームオーバ
 		if(isGameOver&& !isFinish)
 		{
-			//resultMessaeText.GetComponent<Text>().text = "Game Over !!";
-			//pressMessageText.GetComponent<Text>().text = "Press Space Key";
-
-            //ScoreManager.Instance.PlayerDead();
-
 			targetCamera.GetComponent<TargetCamera>().enabled = false;
 			targetCamera.transform.position = new Vector3(200, 1, -3);
 			playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			playerObject.transform.position = new Vector3(200, 0, 0);
-			playerObject.transform.Rotate(0, (int)playerObject.GetComponent<CharacterStatus>().NowAngle * 90, 0);
+			playerObject.transform.Rotate(0, (int)playerObject.GetComponent<Character>().NowAngle * 90, 0);
 			playerObject.GetComponent<Animator>().speed = 1.0f;
 			playerObject.GetComponent<UnityChanController>().SetBool("GameOver", true);
 			playerObject.GetComponent<UnityChanController>().IsControllable = false;
@@ -74,7 +69,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 		}
 
 		// ゲームクリア
-		if(bossObject.GetComponent<CharacterStatus>().IsDestroy() && !isFinish)
+		if(bossObject.GetComponent<Character>().IsDestroy && !isFinish)
 		{
             ScoreManager.Instance.GameClear();
 
@@ -85,7 +80,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 			targetCamera.transform.position = new Vector3(200, 1, -3);
 			playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			playerObject.transform.position = new Vector3(200, 0, 0);
-			playerObject.transform.Rotate(0, (int)playerObject.GetComponent<CharacterStatus>().NowAngle * 90, 0);
+			playerObject.transform.Rotate(0, (int)playerObject.GetComponent<Character>().NowAngle * 90, 0);
 			playerObject.GetComponent<Animator>().speed = 1.0f;
 			// 今のアニメーションを強制的に終わらせる
 			playerObject.GetComponent<UnityChanController>().SetBool("GameClear", true);

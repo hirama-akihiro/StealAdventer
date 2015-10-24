@@ -24,10 +24,10 @@ public class SkillImageScript : MonoBehaviour {
     /// </summary>
     public void ChangeSkillImage()
     {
-        if (player.GetComponent<CharacterStatus>().skillObject != null)
+        if (player.GetComponent<Character>().skillObject != null)
         {
             transform.FindChild("SkillImage").gameObject.SetActive(true);
-            this.GetComponentInChildren<RawImage>().texture = player.GetComponent<CharacterStatus>().skillObject.GetComponent<SkillObjectScript>().SkilImage;
+            this.GetComponentInChildren<RawImage>().texture = player.GetComponent<Character>().skillObject.GetComponent<SkillObjectScript>().SkilImage;
         }
         else
             transform.FindChild("SkillImage").gameObject.SetActive(false);

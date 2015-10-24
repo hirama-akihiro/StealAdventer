@@ -1560,8 +1560,6 @@ GameObject:
   - 136: {fileID: 13698098}
   - 54: {fileID: 5427872}
   - 114: {fileID: 11487310}
-  - 114: {fileID: 11409464}
-  - 114: {fileID: 11473386}
   - 114: {fileID: 11469822}
   - 114: {fileID: 11488622}
   m_Layer: 13
@@ -13252,24 +13250,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
---- !u!114 &11409464
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 200
-  nowHP: 0
-  contactDamage: 10
-  xSpeed: 2
-  ySpeed: 3
-  jumpPower: 7
-  skillObject: {fileID: 0}
 --- !u!114 &11469822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13283,18 +13263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orgStealHand: {fileID: 0}
   spawn: {fileID: 482768}
---- !u!114 &11473386
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b95c8c9a5659354d806f18ba7375d04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skin: {fileID: 11400000, guid: 651ce05ff1eccbd44ae00ec926dc5dc5, type: 2}
 --- !u!114 &11487310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13306,6 +13274,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56196e34980e01e40a99524c968a20b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  nowHP: 0
+  contactDamage: 0
+  xSpeed: 0
+  ySpeed: 0
+  jumpPower: 0
+  skillObject: {fileID: 0}
   DF_NormalAttack: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
   DF_Stamp: {fileID: 113184, guid: c0ab82d83d75fb04ab60a0c24595c77f, type: 2}
   Stone: {fileID: 150878, guid: 5ffa06588ebb04345b03743575b7f520, type: 2}

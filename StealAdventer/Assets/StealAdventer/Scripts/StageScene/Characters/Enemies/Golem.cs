@@ -1,14 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Golem : MonoBehaviour {
+public class Golem : Enemy {
 
 	#region Field
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	private CharacterStatus status;
-	
 	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
@@ -79,9 +74,8 @@ public class Golem : MonoBehaviour {
 	#endregion
 	
 	void Start(){
-		status = GetComponent<CharacterStatus>();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
-		status.NowState = (int)CharacterState.Moving;
+		nowAngle = CharacterAngle.Right;
+		nowState = (int)CharacterState.Moving;
 		myAnimation = GetComponent<Animation>();
 		myRigidBody = GetComponent<Rigidbody> ();
 		capsuleCollider = GetComponent<CapsuleCollider> ();
@@ -91,9 +85,9 @@ public class Golem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (status.nowHP <= 0)
+		if (nowHP <= 0)
 		{
-			status.contactDamage = 0;
+			contactDamage = 0;
 			gameObject.layer = LayerMask.NameToLayer("Character(DeadEnemy)");
 		}
 
@@ -123,11 +117,11 @@ public class Golem : MonoBehaviour {
 			}
 		}
 		
-		switch (status.NowState) {
+		switch (nowState) {
 		case (int)CharacterState.Idling:
 		{
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 10)
-				status.NowState = (int)CharacterState.Moving;
+				nowState = (int)CharacterState.Moving;
 			break;
 		}
 		case (int)CharacterState.Moving:
@@ -135,7 +129,7 @@ public class Golem : MonoBehaviour {
 			//CheckAngle();
 			isAttack = false;
 			myAnimation.Play("walk");
-			transform.position = new Vector3(transform.position.x + (status.xSpeed / 80) * (float)status.NowAngle, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + (xSpeed / 80) * (float)nowAngle, transform.position.y, transform.position.z);
 			/*
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 3 && attackTimer <= 0) {
 				status.NowState = (int)CharacterState.Attacking;
@@ -145,7 +139,7 @@ public class Golem : MonoBehaviour {
 			}
 			*/
 			if(attackTimer <= 0){
-				status.NowState = (int)CharacterState.Attacking;
+				nowState = (int)CharacterState.Attacking;
 				attackTimer = startAttack;
 				SelectAttack();
 				CheckAngle();
@@ -160,7 +154,7 @@ public class Golem : MonoBehaviour {
 			{
 				//プレイヤーの近くまで走る
 				if(!isRunning)
-					transform.position = new Vector3(transform.position.x + (status.xSpeed / 20) * (float)status.NowAngle, transform.position.y, transform.position.z);
+					transform.position = new Vector3(transform.position.x + (xSpeed / 20) * (float)nowAngle, transform.position.y, transform.position.z);
 				//近寄ったらパンチ
 				if(Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 1 && !isRunning){
 					isRunning = true;
@@ -172,7 +166,7 @@ public class Golem : MonoBehaviour {
 				}
 				//移動モードに移行
 				if(myAnimation["punch"].time >= 0.3){
-					status.NowState = (int)CharacterState.Moving;
+					nowState = (int)CharacterState.Moving;
 				}
 				break;
 			}
@@ -185,7 +179,7 @@ public class Golem : MonoBehaviour {
 				}
 				//移動モードに移行
 				if(myAnimation["hpunch"].time >= 0.4f){
-					status.NowState = (int)CharacterState.Moving;
+					nowState = (int)CharacterState.Moving;
 				}
 				break;
 			}
@@ -193,7 +187,7 @@ public class Golem : MonoBehaviour {
 
 			//何かしら止まったら時間経過で強制的に移動モードへ
 			if(attackingTime >= 1.0f)
-				status.NowState = (int)CharacterState.Moving;
+				nowState = (int)CharacterState.Moving;
 
 			break;
 		}
@@ -214,13 +208,13 @@ public class Golem : MonoBehaviour {
 		}
 		
 		//死亡
-		if (status.NowHP <= 0 && status.NowState != (int)CharacterState.Death)
+		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			myAnimation.Play("death");
 			capsuleCollider.center = new Vector3(0.0f, 0.1f, 0.0f);
 			capsuleCollider.radius = 0.3f;
 			capsuleCollider.height = 0.3f;
-			status.NowState = (int)CharacterState.Death;
+			nowState = (int)CharacterState.Death;
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
 			//transform.rotation = Quaternion.Euler(180, 90, 0);
@@ -230,10 +224,10 @@ public class Golem : MonoBehaviour {
 
 	void CheckAngle(){
 		if (player.transform.position.x > transform.position.x) {
-			status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			nowAngle = CharacterAngle.Right;
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		} else {
-			status.NowAngle = CharacterStatus.CharacterAngle.Left;
+			nowAngle = CharacterAngle.Left;
 			transform.rotation = Quaternion.Euler(0, 270, 0);
 		}
 	}
@@ -250,10 +244,10 @@ public class Golem : MonoBehaviour {
 		string layerName = LayerMask.LayerToName (c.gameObject.layer);
 		if (layerName == "ReflectionArea") {
 			transform.Rotate (0, 180, 0);
-			if (status.NowAngle == CharacterStatus.CharacterAngle.Left)
-				status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			if (nowAngle == CharacterAngle.Left)
+				nowAngle = CharacterAngle.Right;
 			else
-				status.NowAngle = CharacterStatus.CharacterAngle.Left;
+				nowAngle = CharacterAngle.Left;
 		}
 	}
 	
@@ -264,7 +258,7 @@ public class Golem : MonoBehaviour {
 		{
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
 				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
 			}
 		}

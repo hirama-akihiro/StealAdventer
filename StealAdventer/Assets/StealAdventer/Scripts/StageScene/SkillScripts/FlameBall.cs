@@ -55,7 +55,6 @@ public class FlameBall : MonoBehaviour {
 
     public void Shot(GameObject spawn)
     {
-        spawnVector = (int)spawn.GetComponent<CharacterStatus>().NowAngle;
-        /*GetComponent<Rigidbody>().velocity = spawn.transform.right * skillSpeed;*/
+        spawnVector = (int)spawn.GetComponent<Character>().NowAngle;
     }
 }

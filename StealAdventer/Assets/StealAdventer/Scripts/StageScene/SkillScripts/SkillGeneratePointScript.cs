@@ -3,11 +3,6 @@ using System.Collections;
 
 public class SkillGeneratePointScript: MonoBehaviour
 {
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	private CharacterStatus status;
-
     /// <summary>
     /// GameObject型SkillObject
     /// </summary>
@@ -31,7 +26,7 @@ public class SkillGeneratePointScript: MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		status = GetComponent<CharacterStatus>();
+		
 	}
 	
 	// Update is called once per frame

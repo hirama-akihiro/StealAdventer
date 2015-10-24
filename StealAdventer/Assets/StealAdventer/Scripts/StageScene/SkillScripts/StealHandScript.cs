@@ -98,7 +98,7 @@ public class StealHandScript : MonoBehaviour {
 			playerObject = GameObject.Find("SDUnityChan");
 			// スキルを奪えなかった場合，特に上書きとかしない
 			if (stealSkillObject != null) {
-                playerObject.GetComponent<CharacterStatus>().skillObject = stealSkillObject;
+                playerObject.GetComponent<Character>().skillObject = stealSkillObject;
                 dataCanvas.transform.FindChild("Skill").GetComponent<SkillImageScript>().ChangeSkillImage();
 				playerObject.SendMessage("InstansiateGetSkillEffect");
 				AudioManager.Instance.PlayAudio("SkillGet");
@@ -150,7 +150,7 @@ public class StealHandScript : MonoBehaviour {
 		// スキルを奪取しているなら何もしない
 		if (isStealSkill) { return; }
 
-		stealSkillObject = collider.GetComponent<CharacterStatus>().skillObject;
+		stealSkillObject = collider.GetComponent<Character>().skillObject;
 		if (stealSkillObject == null) { return; }
 
 		stealSkillDrawObject = Instantiate(stealSkillObject.GetComponent<SkillObjectScript>().DisplaySkillObject);

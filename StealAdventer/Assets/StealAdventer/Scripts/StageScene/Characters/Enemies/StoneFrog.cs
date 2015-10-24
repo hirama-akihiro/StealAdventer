@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StoneFrog : MonoBehaviour {
+public class StoneFrog : Enemy {
 	#region Field
-	/// <summary>
-	/// キャラクターステータス
-	/// </summary>
-	private CharacterStatus status;
-	
 	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
@@ -72,9 +67,8 @@ public class StoneFrog : MonoBehaviour {
 	#endregion
 	
 	void Start(){
-		status = GetComponent<CharacterStatus>();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
-		status.NowState = (int)CharacterState.Idling;
+		nowAngle = CharacterAngle.Right;
+		nowState = (int)CharacterState.Idling;
 		myAnimation = GetComponent<Animation>();
 		myRigidBody = GetComponent<Rigidbody> ();
 		player = GameObject.Find("SDUnityChan");
@@ -83,9 +77,9 @@ public class StoneFrog : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (status.nowHP <= 0)
+		if (nowHP <= 0)
 		{
-			status.contactDamage = 0;
+			contactDamage = 0;
 			gameObject.layer = LayerMask.NameToLayer("Character(DeadEnemy)");
 		}
 
@@ -115,29 +109,28 @@ public class StoneFrog : MonoBehaviour {
 			}
 		}
 		
-		switch (status.NowState) {
+		switch (nowState) {
 		case (int)CharacterState.Idling:
 		{
 			myAnimation.Play("Idle");
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 1)
-				status.NowState = (int)CharacterState.Moving;
+				nowState = (int)CharacterState.Moving;
 			break;
 		}
 		case (int)CharacterState.Moving:
 		{
-			//CheckAngle();
 			isAttack = false;
 			myAnimation.Play("Walk");
-			transform.position = new Vector3(transform.position.x + (status.xSpeed / 80) * (float)status.NowAngle, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + (xSpeed / 80) * (float)nowAngle, transform.position.y, transform.position.z);
 
 			//プレイヤーが離れたら止まる
 			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) >= 10) {
 				myAnimation.Play("Idle");
-				status.NowState = (int)CharacterState.Idling;
+				nowState = (int)CharacterState.Idling;
 			}
 
 			if(attackTimer <= 0){
-				status.NowState = (int)CharacterState.Attacking;
+				nowState = (int)CharacterState.Attacking;
 				attackTimer = startAttack;
 				CheckAngle();
 				myAnimation.Play("Attack2");
@@ -151,7 +144,7 @@ public class StoneFrog : MonoBehaviour {
 			case Attack.Spin://回転攻撃
 			{
 				if(!myAnimation.isPlaying)
-					status.NowState = (int)CharacterState.Moving;
+					nowState = (int)CharacterState.Moving;
 
 				break;
 			}
@@ -176,10 +169,10 @@ public class StoneFrog : MonoBehaviour {
 		}
 		
 		//死亡
-		if (status.NowHP <= 0 && status.NowState != (int)CharacterState.Death)
+		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			myAnimation.Play("Death");
-			status.NowState = (int)CharacterState.Death;
+			nowState = (int)CharacterState.Death;
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
 			//transform.rotation = Quaternion.Euler(180, 90, 0);
@@ -189,10 +182,10 @@ public class StoneFrog : MonoBehaviour {
 	
 	void CheckAngle(){
 		if (player.transform.position.x > transform.position.x) {
-			status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			nowAngle = CharacterAngle.Right;
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		} else {
-			status.NowAngle = CharacterStatus.CharacterAngle.Left;
+			nowAngle = CharacterAngle.Left;
 			transform.rotation = Quaternion.Euler(0, 270, 0);
 		}
 	}
@@ -201,10 +194,10 @@ public class StoneFrog : MonoBehaviour {
 		string layerName = LayerMask.LayerToName (c.gameObject.layer);
 		if (layerName == "ReflectionArea") {
 			transform.Rotate (0, 180, 0);
-			if (status.NowAngle == CharacterStatus.CharacterAngle.Left)
-				status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			if (nowAngle == CharacterAngle.Left)
+				nowAngle = CharacterAngle.Right;
 			else
-				status.NowAngle = CharacterStatus.CharacterAngle.Left;
+				nowAngle = CharacterAngle.Left;
 		}
 	}
 	
@@ -215,8 +208,8 @@ public class StoneFrog : MonoBehaviour {
 		{
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
+				mutekiTime = 1;
 			}
 		}
 	}

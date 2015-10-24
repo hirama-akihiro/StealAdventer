@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Minotaur : MonoBehaviour {
-
-	/// <summary>
-	/// ステータススクリプト
-	/// </summary>
-	private CharacterStatus status;
+public class Minotaur : Enemy {
 
 	/// <summary>
 	/// ブリッツモードスクリプト
@@ -34,8 +29,6 @@ public class Minotaur : MonoBehaviour {
 	private CharacterState nowState;
 
 	private Attack attack;
-	
-	enum CharacterAngle { Left = -1, Right = 1 };
 
 	/// <summary>
 	/// RigidBody
@@ -97,9 +90,8 @@ public class Minotaur : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake () {
-		status = GetComponent<CharacterStatus>();
 		blitz = GetComponent<BlitzMode> ();
-		status.NowAngle = CharacterStatus.CharacterAngle.Right;
+		nowAngle = CharacterAngle.Right;
 		nowState = CharacterState.Standing;
 		myRigidbody = GetComponent<Rigidbody>();
 		anim = GetComponent<Animation> ();
@@ -109,10 +101,10 @@ public class Minotaur : MonoBehaviour {
 		bossStageCenter = GameObject.Find("BossStageCenter");
 		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 		spawnDF = false;
-		oldHP = status.maxHP;
+		oldHP = maxHP;
 		damaged = false;
 		mode = Mode.Normal;
-		if(status.NowHP < status.maxHP / 2)
+		if(nowHP < maxHP / 2)
 			mode = Mode.Blitz;
 		def = 0;
 	}
@@ -156,7 +148,7 @@ public class Minotaur : MonoBehaviour {
 		}
 
 		//モードチェンジ
-		if (mode == Mode.Normal && status.NowHP < status.maxHP / 2) {
+		if (mode == Mode.Normal && nowHP < maxHP / 2) {
 			AudioManager.Instance.PlayAudio("roar02");
 			AudioManager.Instance.PlayAudio("thunder");
 			mode = Mode.Blitz;
@@ -225,7 +217,7 @@ public class Minotaur : MonoBehaviour {
 			myRigidbody.isKinematic = true;
 			anim.Play("RunCycle");
 			CheckAngle();
-			transform.position = new Vector3(transform.position.x + (status.xSpeed / 20) * (float)status.NowAngle, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + (xSpeed / 20) * (float)nowAngle, transform.position.y, transform.position.z);
 
 			switch(atkRand){
 			case 0:
@@ -300,13 +292,10 @@ public class Minotaur : MonoBehaviour {
 				//attackTimer -= 1;
 				atkTimer -= Time.deltaTime;
 				if(atkTimer < 2.5f){
-					//myRigidbody.isKinematic = false;
 					anim.Play("RunCycle");
-					transform.position = new Vector3(transform.position.x + (status.xSpeed / 10) * (float)status.NowAngle, transform.position.y, transform.position.z);
-					//Vector3 velocity = myRigidbody.velocity;
-					//myRigidbody.velocity = new Vector3((int)status.NowAngle * status.xSpeed*6, velocity.y, velocity.z);
+					transform.position = new Vector3(transform.position.x + (xSpeed / 10) * (float)nowAngle, transform.position.y, transform.position.z);
 					if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 2.5) {
-						if(status.NowHP < status.maxHP / 2)
+						if(nowHP < maxHP / 2)
 							Stamp();
 						else
 							NormalAttack();
@@ -497,18 +486,18 @@ public class Minotaur : MonoBehaviour {
 		}
 		}
 		
-		if (status.IsDestroy()) {
+		if (IsDestroy) {
 			anim.Play("Die");
 			nowState = CharacterState.Death;
 		}
 
 		if (damaged) {
 			damageTime -= 1;
-			status.NowHP = oldHP;
+			nowHP = oldHP;
 			if (damageTime < 0)
 				damaged = false;
 		} else {
-			checkDamage(status.NowHP);
+			checkDamage(nowHP);
 		}
 	}
 
@@ -521,12 +510,10 @@ public class Minotaur : MonoBehaviour {
 	/// </summary>
 	public void CheckAngle (){
 		if (player.transform.position.x > transform.position.x) {
-			//nowAngle = CharacterAngle.Right;
-			status.NowAngle = CharacterStatus.CharacterAngle.Right;
+			nowAngle = CharacterAngle.Right;
 			transform.rotation = Quaternion.Euler(0, 90, 0);
 		} else {
-			//nowAngle = CharacterAngle.Left;
-			status.NowAngle = CharacterStatus.CharacterAngle.Left;
+			nowAngle = CharacterAngle.Left;
 			transform.rotation = Quaternion.Euler(0, 270, 0);
 		}
 	}
@@ -577,7 +564,7 @@ public class Minotaur : MonoBehaviour {
 		//attackTimer = 100;
 		attack = Attack.JumpStamp;
 		myRigidbody.AddForce(Vector3.up*8, ForceMode.VelocityChange);
-		myRigidbody.AddForce(Vector3.right*3*(int)status.NowAngle, ForceMode.VelocityChange);
+		myRigidbody.AddForce(Vector3.right*3*(int)nowAngle, ForceMode.VelocityChange);
 
 		anim.Play("Attack_3");
 	}
@@ -670,7 +657,7 @@ public class Minotaur : MonoBehaviour {
 		if (oldHP > hp) {
 			damaged = true;
 			damageTime = 10;
-			oldHP = status.NowHP;
+			oldHP = nowHP;
 		}
 	}
 
@@ -686,7 +673,7 @@ public class Minotaur : MonoBehaviour {
 			myRigidbody.isKinematic = true;
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
 				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
 			}
 		}
@@ -703,7 +690,7 @@ public class Minotaur : MonoBehaviour {
 		{
 			if (mutekiTime < 0)
 			{
-				status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
 				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
 			}
 		}
@@ -716,28 +703,22 @@ public class Minotaur : MonoBehaviour {
         {
             if (mutekiTime < 0)
             {
-                status.NowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
+                nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
                 mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
             }
         }
 	}
 
 	/// <summary>
-	/// ゲーム開始時のメソッド
-	/// </summary>
-	public void GameStart() { enabled = true; }
-
-	/// <summary>
 	/// ゲーム終了時のメソッド
 	/// </summary>
-	public void GameEnd()
+	public override void GameEnd()
 	{
 		enabled = false;
 		CapsuleCollider cCollider;
 		cCollider = GetComponent<CapsuleCollider>();
-		//cCollider.isTrigger = true;
 		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2);
-		if (status.IsDestroy())
+		if (IsDestroy)
 		{
 			anim.Play("Die");
 			nowState = CharacterState.Death;

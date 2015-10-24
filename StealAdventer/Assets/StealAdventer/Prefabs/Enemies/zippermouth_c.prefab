@@ -118,7 +118,6 @@ GameObject:
   - 54: {fileID: 5404782}
   - 135: {fileID: 13579146}
   - 114: {fileID: 11404564}
-  - 114: {fileID: 11466438}
   - 114: {fileID: 11446196}
   - 114: {fileID: 11438170}
   m_Layer: 13
@@ -418,6 +417,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab861522a4341b5701ddce9a2e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  nowHP: 0
+  contactDamage: 0
+  xSpeed: 0
+  ySpeed: 0
+  jumpPower: 0
+  skillObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
   skillObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
   explosionObject: {fileID: 151714, guid: a06c6231f63989f4eaf7e7d1c0ddf502, type: 2}
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
@@ -451,24 +457,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orgStealHand: {fileID: 0}
   spawn: {fileID: 491736}
---- !u!114 &11466438
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 10
-  nowHP: 0
-  contactDamage: 5
-  xSpeed: 1.5
-  ySpeed: 3
-  jumpPower: 7
-  skillObject: {fileID: 160470, guid: b5361729cd5ce504fbc85883ec491b7f, type: 2}
 --- !u!135 &13579146
 SphereCollider:
   m_ObjectHideFlags: 1

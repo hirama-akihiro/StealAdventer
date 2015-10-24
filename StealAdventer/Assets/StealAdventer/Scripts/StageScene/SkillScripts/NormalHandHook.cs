@@ -33,7 +33,7 @@ public class NormalHandHook : MonoBehaviour {
 		startPos = transform.position;
 		nowRotate = 0.0f;
 		playerObject = GameObject.Find("SDUnityChan");
-		if (playerObject.GetComponent<UnityChanController>().status.NowAngle == CharacterStatus.CharacterAngle.Left)
+		if (playerObject.GetComponent<UnityChanController>().NowAngle == Character.CharacterAngle.Left)
 		{
 			transform.Rotate(0, 180, 0);
 		}
@@ -42,7 +42,7 @@ public class NormalHandHook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		nowRotate += rotateSpeed;
-		if (playerObject.GetComponent<UnityChanController>().status.NowAngle == CharacterStatus.CharacterAngle.Right)
+		if (playerObject.GetComponent<UnityChanController>().NowAngle == Character.CharacterAngle.Right)
 		{
 			transform.position = playerObject.transform.position + new Vector3(Mathf.Sin(nowRotate * Mathf.Deg2Rad), 0, -Mathf.Cos(nowRotate * Mathf.Deg2Rad));
 			transform.Rotate(0, rotateSpeed, 0);

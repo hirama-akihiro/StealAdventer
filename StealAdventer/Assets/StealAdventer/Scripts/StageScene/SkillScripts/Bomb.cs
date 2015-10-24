@@ -42,11 +42,8 @@ public class Bomb : MonoBehaviour {
     {
         effectObject = GameObject.Instantiate(effectObjectOrigin);
         effectObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
-        /*if (LayerMask.LayerToName(c.gameObject.layer) == LayerNames.Stage_BreakableObject)
-        {
-            Destroy(c.gameObject);
-        }*/
-        AudioManager.Instance.PlayAudio("Explosion");
+
+        AudioManager.Instance.PlayAudio("SEExplosion");
         Destroy(effectObject, 1.5f);
         Destroy(gameObject);
     }
@@ -55,7 +52,7 @@ public class Bomb : MonoBehaviour {
     {
         this.spawn = spawn;
         gameObject.transform.position = new Vector3(spawn.transform.position.x, spawn.transform.position.y + 0.5f, spawn.transform.position.z);
-        float power_x = Mathf.Cos(Mathf.PI / 180.0f * degree) * (int)this.spawn.GetComponent<CharacterStatus>().NowAngle * power;
+        float power_x = Mathf.Cos(Mathf.PI / 180.0f * degree) * (int)this.spawn.GetComponent<Character>().NowAngle * power;
         float power_y = Mathf.Sin(Mathf.PI / 180.0f * degree) * power;
         gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(power_x, power_y, 0));        
     }

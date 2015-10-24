@@ -2034,9 +2034,7 @@ GameObject:
   - 54: {fileID: 5425214}
   - 136: {fileID: 13600978}
   - 114: {fileID: 11475684}
-  - 114: {fileID: 11447718}
   - 114: {fileID: 11448462}
-  - 114: {fileID: 11482920}
   - 114: {fileID: 11443852}
   - 114: {fileID: 11422680}
   m_Layer: 12
@@ -5064,7 +5062,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6392cdd1ea0db648b73aa9f1879a7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: {fileID: 0}
+  maxHP: 100
+  nowHP: 100
+  contactDamage: 5
+  xSpeed: 5
+  ySpeed: 3
+  jumpPower: 8
+  skillObject: {fileID: 0}
   stock: 3
   stockImages:
   - {fileID: 0}
@@ -5075,24 +5079,6 @@ MonoBehaviour:
   blinkerInterval: .100000001
   normalHandUpper: {fileID: 140248, guid: eb03a5358761df548ac7a80174b4747d, type: 2}
   skillGetEffect: {fileID: 100000, guid: 5a7de8ead76644c7684f675f9cf58f04, type: 2}
---- !u!114 &11447718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2f504cf7e2fbc41a1ffab2f9d5f79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 100
-  nowHP: 0
-  contactDamage: 5
-  xSpeed: 5
-  ySpeed: 3
-  jumpPower: 8
-  skillObject: {fileID: 0}
 --- !u!114 &11448462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5139,18 +5125,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 508261753cbbd4493b10da3a43602a39, type: 2}
   delayWeight: 3
   isKeepFace: 0
---- !u!114 &11482920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100264}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 964dbf5bd40f17e49840f823d15f6022, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpTextObject: {fileID: 0}
 --- !u!135 &13543708
 SphereCollider:
   m_ObjectHideFlags: 1
