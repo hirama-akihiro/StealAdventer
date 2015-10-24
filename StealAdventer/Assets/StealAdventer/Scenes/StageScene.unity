@@ -10221,12 +10221,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56196e34980e01e40a99524c968a20b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  nowHP: 0
-  contactDamage: 0
-  xSpeed: 0
-  ySpeed: 0
-  jumpPower: 0
+  maxHP: 200
+  nowHP: 200
+  contactDamage: 10
+  xSpeed: 2
+  ySpeed: 3
+  jumpPower: 7
   skillObject: {fileID: 0}
   DF_NormalAttack: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
   DF_Stamp: {fileID: 113184, guid: c0ab82d83d75fb04ab60a0c24595c77f, type: 2}

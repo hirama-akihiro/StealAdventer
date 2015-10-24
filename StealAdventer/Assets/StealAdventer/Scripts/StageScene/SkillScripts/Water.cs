@@ -56,7 +56,7 @@ public class Water : MonoBehaviour {
         //Debug.Log(c.gameObject.layer);
         if (LayerMask.LayerToName(c.gameObject.layer) == "Fire")
         {
-            AudioManager.Instance.PlayAudio("Shoka");
+            AudioManager.Instance.PlayAudio("SEShoka");
             effectObject = GameObject.Instantiate(effectObjectOrigin);
             effectObject.transform.position = new Vector3(c.transform.position.x, c.transform.position.y, c.transform.position.z - 0.5f);
             Destroy(effectObject,3.0f);

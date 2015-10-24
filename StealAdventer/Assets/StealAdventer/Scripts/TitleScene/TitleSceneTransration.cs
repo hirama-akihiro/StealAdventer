@@ -12,7 +12,7 @@ public class TitleSceneTransration : MonoBehaviour
 	void Start()
 	{
 		AudioManager.Instance.StopAudio();
-		AudioManager.Instance.PlayAudio("Title");
+		AudioManager.Instance.PlayAudio("BGMTitle");
 	}
 
 	// Update is called once per frame

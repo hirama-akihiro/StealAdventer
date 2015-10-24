@@ -24,7 +24,7 @@ public class RespawnPoint : MonoBehaviour {
 		if (layerName != LayerNames.Player && layerName != LayerNames.MutekiPlayer) { return ;}
 		RespawnManager.Instance.respawnPosition = transform.position; 
 		if (respawnEffect) { Instantiate(respawnEffect,effectPoint.transform.position, transform.rotation); }
-		AudioManager.Instance.PlayAudio("RespawnPoint");
+		AudioManager.Instance.PlayAudio("SERespawnPoint");
 		isTouch = true;
 	}
 }

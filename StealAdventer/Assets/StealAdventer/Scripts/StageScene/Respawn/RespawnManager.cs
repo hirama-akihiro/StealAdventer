@@ -60,7 +60,7 @@ public class RespawnManager : SingletonMonoBehavior<RespawnManager>{
 			playerObject.GetComponent<UnityChanController>().isMovable = true;
 			playerObject.GetComponent<Rigidbody>().isKinematic = false;
 			playerObject.GetComponent<CapsuleCollider>().isTrigger = false;
-			AudioManager.Instance.PlayAudio("RespawnVoice");
+			AudioManager.Instance.PlayAudio("VoiceRespawn");
 		}
 	}
 

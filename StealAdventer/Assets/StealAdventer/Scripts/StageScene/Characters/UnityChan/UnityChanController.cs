@@ -185,7 +185,7 @@ public class UnityChanController : Player {
 		nowState = (int)CharacterState.Jumping;
 		isJump = true;
 		myRigidbody.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-		SEManager.Instance.PlayAudio("JumpVoice");
+		SEManager.Instance.PlayAudio("VoiceJump");
 	}
 
 	/// <summary>
@@ -204,9 +204,9 @@ public class UnityChanController : Player {
 		{
 			isMovable = false;
 			CharacterMove(0, nowAngle);
-			AudioManager.Instance.PlayAudio("LongSkillvoice");
+			AudioManager.Instance.PlayAudio("VoiceLongSkill");
 		}
-		else { AudioManager.Instance.PlayAudio("ShortSkillVoice"); }	
+		else { AudioManager.Instance.PlayAudio("VoiceShortSkill"); }	
 	}
 
 	/// <summary>
@@ -230,7 +230,7 @@ public class UnityChanController : Player {
 		IsControllable = false;
 		isMovable = false;
 		isRun = false;
-		AudioManager.Instance.PlayAudio("ShortSkillVoice");		
+		AudioManager.Instance.PlayAudio("VoiceShortSkill");		
 	}
 
 	/// <summary>
@@ -252,7 +252,7 @@ public class UnityChanController : Player {
 		IsControllable = false;
 		isMovable = false;
 		nowUpperCoolTime = normalHandUpper.GetComponent<SkillParam>().coolTime;
-		AudioManager.Instance.PlayAudio("NormalAttackVoice");
+		AudioManager.Instance.PlayAudio("VoiceNormalAttack");
 	}
 
 	/// <summary>
@@ -296,6 +296,7 @@ public class UnityChanController : Player {
 
 	private void OnTriggerEnter(Collider collider)
 	{
+		Debug.Log(collider);
 		string layerName = LayerMask.LayerToName(collider.gameObject.layer);
 		if (layerName == LayerNames.EnemySkill)
 		{
@@ -316,7 +317,7 @@ public class UnityChanController : Player {
 		nowHP -= damege;
 		ScoreManager.Instance.AddDamagedScore(damege);
 		mutekiTime = 1;
-		AudioManager.Instance.PlayAudio("DamageVoice");
+		AudioManager.Instance.PlayAudio("VoiceDamage");
 		myRigidbody.isKinematic = false;
 		if (nowHP > 0) { StartCoroutine("MutekiFlashing"); }
 		else { mutekiTime = -1; }

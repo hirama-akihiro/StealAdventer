@@ -96,7 +96,7 @@ public class Rock : MonoBehaviour {
 			//myRigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 			//myRigidbody.isKinematic = true;
 			if (!AudioManager.Instance.IsPlaying("Stone"))
-				AudioManager.Instance.PlayAudio("Stone");
+				AudioManager.Instance.PlayAudio("SEStone");
 		}
 	}
 }

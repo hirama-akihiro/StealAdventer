@@ -43,7 +43,7 @@ public class Coin : MonoBehaviour {
             player = c.gameObject;
             //ScoreManager.Instance.AddScore(point);
             ScoreManager.Instance.AddCoin(point);
-            AudioManager.Instance.PlayAudio("Coin");
+            AudioManager.Instance.PlayAudio("SECoin");
             GetComponent<SphereCollider>().isTrigger = true;
             Destroy(gameObject,1.0f);
         }
@@ -56,7 +56,7 @@ public class Coin : MonoBehaviour {
 			player = c.gameObject;
 			//ScoreManager.Instance.AddScore(point);
 			ScoreManager.Instance.AddCoin(point);
-			AudioManager.Instance.PlayAudio("Coin");
+			AudioManager.Instance.PlayAudio("SECoin");
 			GetComponent<SphereCollider>().isTrigger = true;
 			Destroy(gameObject,1.0f);
 		}

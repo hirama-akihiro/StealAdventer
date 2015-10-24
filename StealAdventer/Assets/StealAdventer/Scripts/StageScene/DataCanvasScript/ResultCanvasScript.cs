@@ -102,7 +102,7 @@ public class ResultCanvasScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+		
 	}
 	
 	// Update is called once per frame
@@ -112,56 +112,45 @@ public class ResultCanvasScript : MonoBehaviour {
 
     private IEnumerator ShowResultCoroutine()
     {
-        //yield return null;
-        yield return new WaitForSeconds(displayInterval);
+		Debug.Log("Result Canvas Is Show");
+		//yield return null;
+		yield return new WaitForSeconds(displayInterval);
         clearTimeText.transform.parent.gameObject.SetActive(true);
         clearTimeText.text = new DateTime(0).Add(ScoreManager.Instance.ClearTime).ToString("mm:ss");
         clearTimePointText.text = ScoreManager.Instance.GetClearTimePoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         coinsText.transform.parent.gameObject.SetActive(true);
         coinsText.text = ScoreManager.Instance.Coins.ToString();
         coinsPointText.text = ScoreManager.Instance.GetCoinsPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         damagesText.transform.parent.gameObject.SetActive(true);
         damagesText.text = ScoreManager.Instance.DamagedScore.ToString();
         damagesPointText.text = ScoreManager.Instance.GetDamagesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         defeatEnemiesText.transform.parent.gameObject.SetActive(true);
         defeatEnemiesText.text = ScoreManager.Instance.DefeatEnemyScore.ToString();
         defeatEnemiesPointText.text = ScoreManager.Instance.GetDefeatEnemiesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         playerDeadTimesText.transform.parent.gameObject.SetActive(true);
         playerDeadTimesText.text = ScoreManager.Instance.PlayerDeadTimes.ToString();
         playerDeadTimesPointText.text = ScoreManager.Instance.GetPlayerDeadTimesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         totalPointText.transform.parent.parent.gameObject.SetActive(true);
         transform.FindChild("Line").gameObject.SetActive(true);
         totalPointText.text = ScoreManager.Instance.GetFinalScore().ToString() + "P";
-        AudioManager.Instance.PlayAudio("TextDisplay");
+        AudioManager.Instance.PlayAudio("SETextDisplay");
 
         char rank;
-
-        /*switch (ScoreManager.Instance.GetFinalScore() / 20)
-        {
-            case 4:
-            case 5:
-                rank = 'S';
-                break;
-
-            default:
-                rank = (char)(68 - ScoreManager.Instance.GetFinalScore() / 20);
-                break;
-        }*/
 
         int finalScore = ScoreManager.Instance.GetFinalScore();
         if (finalScore >= rankSBorder)
@@ -178,7 +167,7 @@ public class ResultCanvasScript : MonoBehaviour {
         yield return new WaitForSeconds(displayInterval * 3);
         finalEvaluationText.gameObject.SetActive(true);
         finalEvaluationText.text = "最終評価:" + rank;
-        AudioManager.Instance.PlayAudio("Result");
+        AudioManager.Instance.PlayAudio("BGMResult");
 
         while (AudioManager.Instance.IsPlaying("Result"))
             yield return null;
@@ -191,7 +180,6 @@ public class ResultCanvasScript : MonoBehaviour {
     public void ShowResult()
     {
         this.gameObject.SetActive(true);
-        //ShowResultNormal();
         StartCoroutine(ShowResultCoroutine());
     }
 
@@ -221,18 +209,6 @@ public class ResultCanvasScript : MonoBehaviour {
         totalPointText.text = ScoreManager.Instance.GetFinalScore().ToString();
 
         char rank;
-
-        /*switch (ScoreManager.Instance.GetFinalScore() / 20)
-        {
-            case 4:
-            case 5:
-                rank = 'S';
-                break;
-
-            default:
-                rank = (char)(68 - ScoreManager.Instance.GetFinalScore() / 20);
-                break;
-        }*/
 
         int finalScore = ScoreManager.Instance.GetFinalScore();
         if (finalScore >= rankSBorder)

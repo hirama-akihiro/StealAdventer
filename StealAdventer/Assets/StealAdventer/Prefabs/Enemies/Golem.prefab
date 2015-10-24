@@ -1834,7 +1834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 30
-  nowHP: 0
+  nowHP: 30
   contactDamage: 5
   xSpeed: 2
   ySpeed: 3
@@ -2012,6 +2012,10 @@ Prefab:
       propertyPath: m_Animation
       value: 
       objectReference: {fileID: 7400008, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: nowHP
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113520}

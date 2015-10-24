@@ -37,19 +37,19 @@ public class GameStarter : MonoBehaviour {
 			{
 				case "3":
 					countDownImageObject.GetComponent<Image>().sprite = countDownThree;
-					AudioManager.Instance.PlayAudio("Three");
+					AudioManager.Instance.PlayAudio("VoiceThree");
 					break;
 				case "2":
 					countDownImageObject.GetComponent<Image>().sprite = countDownTwo;
-					AudioManager.Instance.PlayAudio("Two");
+					AudioManager.Instance.PlayAudio("VoiceTwo");
 					break;
 				case "1":
 					countDownImageObject.GetComponent<Image>().sprite = countDownOne;
-					AudioManager.Instance.PlayAudio("One");
+					AudioManager.Instance.PlayAudio("VoiceOne");
 					break;
 				case "0":
 					countDownImageObject.GetComponent<Image>().sprite = countDownStart;
-					AudioManager.Instance.PlayAudio("Start");
+					AudioManager.Instance.PlayAudio("VoiceStart");
 					break;
 			}
 		}

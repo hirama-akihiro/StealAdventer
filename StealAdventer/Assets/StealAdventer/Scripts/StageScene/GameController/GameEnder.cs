@@ -60,7 +60,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 			isFinish = true;
 			playerObject.BroadcastMessage("GameEnd");
 			bossObject.SendMessage("GameEnd");
-            SEManager.Instance.PlayAudio("GameOverVoice");
+            SEManager.Instance.PlayAudio("VoiceGameOver");
 
 			dataCanvas.SetActive(false);
 
@@ -88,7 +88,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 			isFinish = true;
 			playerObject.BroadcastMessage("GameEnd");
 			bossObject.SendMessage("GameEnd");
-            SEManager.Instance.PlayAudio("GameClearVoice");
+            SEManager.Instance.PlayAudio("VoiceGameClear");
 
 			dataCanvas.SetActive(false);
 
@@ -106,15 +106,12 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 
                 /* リザルト画面表示 */
                 //resultCanvas.GetComponent<ResultCanvasScript>().ShowResult();
-
-                //GameObject.Find("ElapsedTimeText").GetComponent<ElapsedTimeScript>().GameEnd();
             }
 			else if (UserInput.Instance.PressAnyKey && resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed)
             {
                 resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed = false;
                 AudioManager.Instance.StopAudio();
-				//FadeManager.Instance.LoadLevel("TitleScene", 0.5f);
-                Application.LoadLevel("TitleScene");
+				FadeManager.Instance.LoadLevel("TitleScene", 0.5f);
             }
 
 			Animator animator = playerObject.GetComponent<Animator>();

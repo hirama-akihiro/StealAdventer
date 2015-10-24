@@ -417,12 +417,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09ab861522a4341b5701ddce9a2e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  nowHP: 0
-  contactDamage: 0
-  xSpeed: 0
-  ySpeed: 0
-  jumpPower: 0
+  maxHP: 10
+  nowHP: 10
+  contactDamage: 5
+  xSpeed: 1.5
+  ySpeed: 3
+  jumpPower: 7
   skillObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
   skillObject: {fileID: 185208, guid: 3c15c863ca00a344e909ba638c1a88f7, type: 2}
   explosionObject: {fileID: 151714, guid: a06c6231f63989f4eaf7e7d1c0ddf502, type: 2}
@@ -612,6 +612,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: dropProb
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: xSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: jumpPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: nowHP
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

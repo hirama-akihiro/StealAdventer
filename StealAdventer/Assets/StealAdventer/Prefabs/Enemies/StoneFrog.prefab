@@ -602,12 +602,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999035b5ba403134a972ca92127d86fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  nowHP: 0
-  contactDamage: 0
-  xSpeed: 0
-  ySpeed: 0
-  jumpPower: 0
+  maxHP: 30
+  nowHP: 30
+  contactDamage: 5
+  xSpeed: 1
+  ySpeed: 3
+  jumpPower: 7
   skillObject: {fileID: 0}
   damageField: {fileID: 150272, guid: cef3592f9a74a3c4890a02117fd4b85a, type: 2}
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
@@ -692,6 +692,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: dropProb
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: xSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: jumpPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: nowHP
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

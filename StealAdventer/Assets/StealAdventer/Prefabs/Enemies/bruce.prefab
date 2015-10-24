@@ -1637,7 +1637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 20
-  nowHP: 0
+  nowHP: 20
   contactDamage: 10
   xSpeed: 6
   ySpeed: 3
@@ -1814,6 +1814,10 @@ Prefab:
       propertyPath: skillObject
       value: 
       objectReference: {fileID: 131494, guid: 9c0d4df700c1da44a99b4bc7cc260a72, type: 2}
+    - target: {fileID: 0}
+      propertyPath: nowHP
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 154922}
