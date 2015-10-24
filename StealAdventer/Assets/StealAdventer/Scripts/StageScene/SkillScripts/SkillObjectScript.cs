@@ -7,12 +7,12 @@ public class SkillObjectScript : MonoBehaviour {
     /// <summary>
     /// 攻撃スキルオブジェクト
     /// </summary>
-    public GameObject AttackSkilObject;
+    public GameObject attackSkilObject;
 
     /// <summary>
     /// 表示スキルオブジェクト
     /// </summary>
-    public GameObject DisplaySkillObject;
+    public GameObject displaySkillObject;
 
     /// <summary>
     /// スキルのイメージ画像

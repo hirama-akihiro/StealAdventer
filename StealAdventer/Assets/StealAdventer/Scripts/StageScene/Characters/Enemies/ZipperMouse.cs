@@ -8,11 +8,6 @@ public class ZipperMouse : Enemy {
 	/// キャラクターの状態
 	/// </summary>
 	enum CharacterState { Idling = 0, Moving = 1, Attacking = 2, Damage = 3, Death = 4};
-	
-	/// <summary>
-	/// Skillオブジェクト
-	/// </summary>
-	public GameObject skillObject;
 
 	/// <summary>
 	/// Animation
@@ -119,7 +114,7 @@ public class ZipperMouse : Enemy {
 		{
 			//攻撃発射
 			if(myAnimation["attack"].normalizedTime > 0.35f && !isAttack){
-				skillGeneratePoint.GenerateSkill(skillObject, LayerNames.EnemySkill);
+				skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().attackSkilObject, LayerNames.EnemySkill);
 				isAttack = true;
 			}
 			

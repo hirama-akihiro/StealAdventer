@@ -197,10 +197,10 @@ public class UnityChanController : Player {
 		if (IsWorping) { return; }
 
 		nowState = (int)CharacterState.SkillAttack;
-		skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().AttackSkilObject, LayerNames.PlayerSkill);
-		maxCoolTime = skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().coolTime;
+		skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().attackSkilObject, LayerNames.PlayerSkill);
+		maxCoolTime = skillObject.GetComponent<SkillObjectScript>().attackSkilObject.GetComponent<SkillParam>().coolTime;
 		nowCoolTime = maxCoolTime;
-		if (skillObject.GetComponent<SkillObjectScript>().AttackSkilObject.GetComponent<SkillParam>().skillType == SkillParam.SkillType.Long)
+		if (skillObject.GetComponent<SkillObjectScript>().attackSkilObject.GetComponent<SkillParam>().skillType == SkillParam.SkillType.Long)
 		{
 			isMovable = false;
 			CharacterMove(0, nowAngle);

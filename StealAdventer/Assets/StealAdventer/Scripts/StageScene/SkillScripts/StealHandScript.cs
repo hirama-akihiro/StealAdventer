@@ -153,7 +153,7 @@ public class StealHandScript : MonoBehaviour {
 		stealSkillObject = collider.GetComponent<Character>().skillObject;
 		if (stealSkillObject == null) { return; }
 
-		stealSkillDrawObject = Instantiate(stealSkillObject.GetComponent<SkillObjectScript>().DisplaySkillObject);
+		stealSkillDrawObject = Instantiate(stealSkillObject.GetComponent<SkillObjectScript>().displaySkillObject);
 		stealSkillDrawObject.transform.position = transform.position;
 		stealSkillDrawObject.transform.parent = this.gameObject.transform;
 		stealSkillDrawObject.layer = LayerMask.NameToLayer("NoCollision");
