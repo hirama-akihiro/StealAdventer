@@ -12,11 +12,12 @@ public class StoneFrog : MonoBehaviour {
 	/// キャラクターの状態
 	/// </summary>
 	enum CharacterState { Idling = 0, Moving = 1, Attacking = 2, Damage = 3, Death = 4};
-	
+
 	/// <summary>
 	/// 攻撃パターン
 	/// </summary>
-	enum Attack {Spin=0};
+	enum Attack { Spin = 0 };
+
 	private Attack attack;
 	
 	/// <summary>

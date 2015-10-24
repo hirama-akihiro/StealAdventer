@@ -12,16 +12,6 @@ public class UnityChanBase : MonoBehaviour {
 	protected event Action OnStealHandEvent;
 	protected event Action OnUpperHandEvent;
 
-	private Transform cashedTransform;
-	public Transform CashedTransform
-	{
-		get
-		{
-			if (cashedTransform == null) { cashedTransform = GetComponent<Transform>(); }
-			return cashedTransform;
-		}
-	}
-
 	// Use this for initialization
 	virtual protected void Awake () {
 		OnNoMoveEvent += OnNoMove;

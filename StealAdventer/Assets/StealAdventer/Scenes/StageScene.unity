@@ -27592,7 +27592,12 @@ Prefab:
       propertyPath: coolTimeRateObject
       value: 
       objectReference: {fileID: 474922637}
-    m_RemovedComponents: []
+    - target: {fileID: 9563564, guid: 13a16f60da4245c45a865b2136ba272c, type: 2}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11482920, guid: 13a16f60da4245c45a865b2136ba272c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 13a16f60da4245c45a865b2136ba272c, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &617586436

@@ -241,22 +241,9 @@ public class Golem : MonoBehaviour {
 	//攻撃を選び準備する関数
 	void SelectAttack(){
 		attackingTime = 0;
-		attackPatern = Random.Range (0, 2);
-		switch (0) {
-		case 0:
-		{
-			attack = Attack.Punch;
-			myAnimation.Play("run");
-			isRunning = false;
-			break;
-		}
-		case 1:
-		{
-			attack = Attack.Throw;
-			myAnimation.Play("hpunch");
-			break;
-		}
-		}
+		attack = Attack.Punch;
+		myAnimation.Play("run");
+		isRunning = false;
 	}
 	
 	void OnTriggerEnter(Collider c){
