@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class TrapTriggerL : MonoBehaviour {
-
-	leftRotateScript left;
 	
 	/// <summary>
 	/// 左側フロアー
@@ -12,7 +10,7 @@ public class TrapTriggerL : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		left = gameObject.AddComponent<leftRotateScript> ();
+
 	}
 	
 	// Update is called once per frame

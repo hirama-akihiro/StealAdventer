@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bruce : Enemy {
+public class Bruce : NormalEnemy {
 
 	#region アニメーションフレーム
 	private float stop_s = 0.01f;
 	private float stop_e = 0.06f;
-
-	private float blow_s = 0.061f;
-	private float blow_e = 0.112f;
-	private float blow_a = 0.08f;
 
 	private float scissor_s = 0.19f;
 	private float scissor_e = 0.245f;
@@ -37,11 +33,6 @@ public class Bruce : Enemy {
 	/// </summary>
 	public GameObject slash;
 	
-	/// <summary>
-	/// capsuleCollider
-	/// </summary>
-	private CapsuleCollider capsuleCollider;
-	
 	#region 計測用変数
 	private float deathTime = 2;
 	private float attackTimer;
@@ -49,26 +40,19 @@ public class Bruce : Enemy {
 	private int attackPatern;
 	#endregion
 	
-	public float blinkerInterval;
 	private float blinkerTime;
-	public float mutekiTime;
 	public int dropProb;
-	
 	#endregion
 
 	// Use this for initialization
-	void Start () {
-		myAnimation = GetComponent<Animation> ();
+	protected override void Start () {
+		base.Start();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Idling;
-		myRigidBody = GetComponent<Rigidbody> ();
-		capsuleCollider = GetComponent<CapsuleCollider> ();
-		player = GameObject.Find("SDUnityChan");
-		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 		if (nowHP <= 0)
 		{
 			contactDamage = 0;
@@ -76,30 +60,6 @@ public class Bruce : Enemy {
 		}
 
 		attackTimer -= Time.deltaTime;
-		mutekiTime -= Time.deltaTime;
-		
-		// 無敵時間の点滅処理
-		if (mutekiTime > 0)
-		{
-			if (blinkerTime < 0)
-			{
-				// 自身と子オブジェクトのRendererを取得
-				Renderer[] objList = GetComponentsInChildren<Renderer>();
-				foreach (Renderer renderer in objList)
-				{
-					renderer.enabled = !renderer.enabled;
-				}
-				blinkerTime = blinkerInterval;
-			}
-			blinkerTime -= Time.deltaTime;
-		}
-		else {
-			Renderer[] objList = GetComponentsInChildren<Renderer> ();
-			foreach (Renderer renderer in objList) {
-				if(!renderer.enabled)
-					renderer.enabled = !renderer.enabled;
-			}
-		}
 		
 		switch (nowState) {
 		case (int)CharacterState.Idling:
@@ -228,30 +188,6 @@ public class Bruce : Enemy {
 		}
 		if (myAnimation ["Take 0010"].normalizedTime < s) {
 			myAnimation["Take 0010"].speed = 1;
-		}
-	}
-	
-	void OnTriggerEnter(Collider c){
-		string layerName = LayerMask.LayerToName (c.gameObject.layer);
-		if (layerName == "ReflectionArea") {
-			transform.Rotate (0, 180, 0);
-			if (nowAngle == CharacterAngle.Left)
-				nowAngle = CharacterAngle.Right;
-			else
-				nowAngle = CharacterAngle.Left;
-		}
-	}
-	
-	private void OnTriggerStay(Collider collision)
-	{
-		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-		if (layerName == LayerNames.PlayerSkill)
-		{
-			if (mutekiTime < 0)
-			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-			}
 		}
 	}
 }

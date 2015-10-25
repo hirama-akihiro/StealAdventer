@@ -146,7 +146,6 @@ public class StealHandScript : MonoBehaviour {
 	/// <param name="collider"></param>
 	private void OnTriggerEnter(Collider collider)
 	{
-		string layerName = LayerMask.LayerToName(collider.gameObject.layer);
 		// スキルを奪取しているなら何もしない
 		if (isStealSkill) { return; }
 

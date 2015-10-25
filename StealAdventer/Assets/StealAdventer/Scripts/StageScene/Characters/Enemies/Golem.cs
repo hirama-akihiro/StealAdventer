@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Golem : Enemy {
+public class Golem : NormalEnemy {
 
 	#region Field
 	/// <summary>
@@ -22,39 +22,9 @@ public class Golem : Enemy {
 	public GameObject punch;
 	
 	/// <summary>
-	/// Animation
-	/// </summary>
-	private Animation myAnimation;
-	
-	/// <summary>
-	/// プレイヤーオブジェクト
-	/// </summary>
-	private GameObject player;
-	
-	/// <summary>
-	/// rigidBody
-	/// </summary>
-	private Rigidbody myRigidBody;
-
-	/// <summary>
 	/// capsuleCollider
 	/// </summary>
 	private CapsuleCollider capsuleCollider;
-	
-	/// <summary>
-	/// 攻撃位置スクリプト
-	/// </summary>
-	private SkillGeneratePointScript skillGeneratePoint;
-
-	/// <summary>
-	/// 死亡時エフェクト
-	/// </summary>
-	public GameObject deathEffect;
-
-	/// <summary>
-	/// ドロップアイテム
-	/// </summary>
-	public GameObject dropItem;
 
 	#region 計測用変数
 	private float deathTime = 2;
@@ -66,25 +36,20 @@ public class Golem : Enemy {
 	private float attackingTime;
 	#endregion
 	
-	public float blinkerInterval;
 	private float blinkerTime;
-	public float mutekiTime;
 	public int dropProb;
 	
 	#endregion
 	
-	void Start(){
+	protected override void Start(){
+		base.Start();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Moving;
-		myAnimation = GetComponent<Animation>();
-		myRigidBody = GetComponent<Rigidbody> ();
 		capsuleCollider = GetComponent<CapsuleCollider> ();
-		player = GameObject.Find("SDUnityChan");
-		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 		if (nowHP <= 0)
 		{
 			contactDamage = 0;
@@ -92,52 +57,20 @@ public class Golem : Enemy {
 		}
 
 		attackTimer -= Time.deltaTime;
-		mutekiTime -= Time.deltaTime;
-		
-		// 無敵時間の点滅処理
-		if (mutekiTime > 0)
-		{
-			if (blinkerTime < 0)
-			{
-				// 自身と子オブジェクトのRendererを取得
-				Renderer[] objList = GetComponentsInChildren<Renderer>();
-				foreach (Renderer renderer in objList)
-				{
-					renderer.enabled = !renderer.enabled;
-				}
-				blinkerTime = blinkerInterval;
-			}
-			blinkerTime -= Time.deltaTime;
-		}
-		else {
-			Renderer[] objList = GetComponentsInChildren<Renderer> ();
-			foreach (Renderer renderer in objList) {
-				if(!renderer.enabled)
-					renderer.enabled = !renderer.enabled;
-			}
-		}
 		
 		switch (nowState) {
 		case (int)CharacterState.Idling:
 		{
-			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 10)
+			if (Mathf.Abs (CashedTransform.position.x - player.transform.position.x) <= 10)
 				nowState = (int)CharacterState.Moving;
 			break;
 		}
 		case (int)CharacterState.Moving:
 		{
-			//CheckAngle();
 			isAttack = false;
 			myAnimation.Play("walk");
-			transform.position = new Vector3(transform.position.x + (xSpeed / 80) * (float)nowAngle, transform.position.y, transform.position.z);
-			/*
-			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 3 && attackTimer <= 0) {
-				status.NowState = (int)CharacterState.Attacking;
-				attackTimer = startAttack;
-				myAnimation.Play("punch");
-				CheckAngle();
-			}
-			*/
+			CashedTransform.position = new Vector3(CashedTransform.position.x + (xSpeed / 80) * (float)nowAngle, CashedTransform.position.y, CashedTransform.position.z);
+
 			if(attackTimer <= 0){
 				nowState = (int)CharacterState.Attacking;
 				attackTimer = startAttack;
@@ -154,9 +87,9 @@ public class Golem : Enemy {
 			{
 				//プレイヤーの近くまで走る
 				if(!isRunning)
-					transform.position = new Vector3(transform.position.x + (xSpeed / 20) * (float)nowAngle, transform.position.y, transform.position.z);
+					CashedTransform.position = new Vector3(CashedTransform.position.x + (xSpeed / 20) * (float)nowAngle, CashedTransform.position.y, CashedTransform.position.z);
 				//近寄ったらパンチ
-				if(Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 1 && !isRunning){
+				if(Mathf.Abs (CashedTransform.position.x - player.transform.position.x) <= 1 && !isRunning){
 					isRunning = true;
 					myAnimation.Play("punch");
 				}
@@ -193,14 +126,13 @@ public class Golem : Enemy {
 		}
 		case (int)CharacterState.Death:
 		{
-			//transform.localScale = new Vector3(1, 1, 1);
 			deathTime -= Time.deltaTime;
 			myRigidBody.isKinematic = true;
 			if(deathTime <= 0){
 				int drop = Random.Range(0, dropProb);
 				if(drop == 0)
-					Instantiate(dropItem, this.transform.position, Quaternion.Euler(0, 90, 0));
-				Instantiate(deathEffect, this.transform.position, Quaternion.Euler(0, 90, 0));
+					Instantiate(dropItem, CashedPosition, Quaternion.Euler(0, 90, 0));
+				Instantiate(deathEffect, CashedPosition, Quaternion.Euler(0, 90, 0));
 				Destroy(gameObject);
 			}
 			break;
@@ -215,10 +147,7 @@ public class Golem : Enemy {
 			capsuleCollider.radius = 0.3f;
 			capsuleCollider.height = 0.3f;
 			nowState = (int)CharacterState.Death;
-			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
-			//transform.rotation = Quaternion.Euler(180, 90, 0);
-			//transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
 		}
 	}
 
@@ -238,29 +167,5 @@ public class Golem : Enemy {
 		attack = Attack.Punch;
 		myAnimation.Play("run");
 		isRunning = false;
-	}
-	
-	void OnTriggerEnter(Collider c){
-		string layerName = LayerMask.LayerToName (c.gameObject.layer);
-		if (layerName == "ReflectionArea") {
-			transform.Rotate (0, 180, 0);
-			if (nowAngle == CharacterAngle.Left)
-				nowAngle = CharacterAngle.Right;
-			else
-				nowAngle = CharacterAngle.Left;
-		}
-	}
-	
-	private void OnTriggerStay(Collider collision)
-	{
-		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-		if (layerName == LayerNames.PlayerSkill)
-		{
-			if (mutekiTime < 0)
-			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-			}
-		}
 	}
 }

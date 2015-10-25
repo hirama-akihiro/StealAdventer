@@ -1,53 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ZipperMouse_C : Enemy
+public class ZipperMouse_C : NormalEnemy
 {
 	#region Field
 	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
 	enum CharacterState { Idling = 0, Moving = 1, Attacking = 2, Damage = 3, Death = 4, Explosion = 5 };
-		
-	/// <summary>
-	/// Skillオブジェクト
-	/// </summary>
-	public GameObject skillObject;
 
 	/// <summary>
 	/// 爆発エフェクト
 	/// </summary>
 	public GameObject explosionObject;
-	
-	/// <summary>
-	/// Animation
-	/// </summary>
-	private Animation myAnimation;
-	
-	/// <summary>
-	/// プレイヤーオブジェクト
-	/// </summary>
-	private GameObject player;
-
-	/// <summary>
-	/// rigidBody
-	/// </summary>
-	private Rigidbody myRigidBody;
-
-	/// <summary>
-	/// 攻撃位置スクリプト
-	/// </summary>
-	private SkillGeneratePointScript skillGeneratePoint;
-
-	/// <summary>
-	/// 死亡時エフェクト
-	/// </summary>
-	public GameObject deathEffect;
-
-	/// <summary>
-	/// ドロップアイテム
-	/// </summary>
-	public GameObject dropItem;
 
 	#region 計測用変数
 	private float deathTime = 2;
@@ -58,50 +23,21 @@ public class ZipperMouse_C : Enemy
 	private bool isExplode = false;
 	#endregion
 
-	public float blinkerInterval;
 	private float blinkerTime;
-	public float mutekiTime;
 	public int dropProb;
 
 	#endregion
 
-	void Start(){
+	protected override void Start(){
+		base.Start();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Moving;
-		myAnimation = GetComponent<Animation>();
-		myRigidBody = GetComponent<Rigidbody> ();
-		player = GameObject.Find("SDUnityChan");
-		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 
 		attackTimer -= Time.deltaTime;
-		mutekiTime -= Time.deltaTime;
-		
-		// 無敵時間の点滅処理
-		if (mutekiTime > 0)
-		{
-			if (blinkerTime < 0)
-			{
-				// 自身と子オブジェクトのRendererを取得
-				Renderer[] objList = GetComponentsInChildren<Renderer>();
-				foreach (Renderer renderer in objList)
-				{
-					renderer.enabled = !renderer.enabled;
-				}
-				blinkerTime = blinkerInterval;
-			}
-			blinkerTime -= Time.deltaTime;
-		}
-		else {
-			Renderer[] objList = GetComponentsInChildren<Renderer> ();
-			foreach (Renderer renderer in objList) {
-				if(!renderer.enabled)
-					renderer.enabled = !renderer.enabled;
-			}
-		}
 		
 		switch (nowState) {
 		case (int)CharacterState.Moving:
@@ -150,10 +86,6 @@ public class ZipperMouse_C : Enemy
 			myAnimation.Play("wound");
 			explodeTimer -= Time.deltaTime;
 			if(explodeTimer <= 0){
-				/*
-				status.NowState = (int)CharacterState.Moving;
-				status.NowHP = 1;
-				*/
 				transform.localScale = new Vector3(1, 1, 1);
 				nowState = (int)CharacterState.Death;
 				transform.rotation = Quaternion.Euler(180, 90, 0);
@@ -165,54 +97,12 @@ public class ZipperMouse_C : Enemy
 		}	
 		}
 
-		//死亡
-		/*
-		if (status.NowHP <= 0 && status.NowState != (int)CharacterState.Death)
-		{
-			status.NowState = (int)CharacterState.Death;
-			transform.rotation = Quaternion.Euler(180, 90, 0);
-			transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		}
-		*/
-
-		//爆発
-		/*
-		if (status.NowHP <= status.maxHP / 3 && status.NowState == (int)CharacterState.Moving && !isExplode) {
-			status.NowState = (int)CharacterState.Explosion;
-			isExplode = true;
-		}
-		*/
-
 		//ＨＰ０で自爆
 		if(nowHP <= 0 && isExplode == false){
 			nowState = (int)CharacterState.Explosion;
 			isExplode = true;
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
-		}
-	}
-	
-	void OnTriggerEnter(Collider c){
-		string layerName = LayerMask.LayerToName (c.gameObject.layer);
-		if (layerName == "ReflectionArea") {
-			transform.Rotate (0, 180, 0);
-			if (nowAngle == CharacterAngle.Left)
-				nowAngle = CharacterAngle.Right;
-			else
-				nowAngle = CharacterAngle.Left;
-		}
-	}
-
-	private void OnTriggerStay(Collider collision)
-	{
-		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-		if (layerName == LayerNames.PlayerSkill)
-		{
-			if (mutekiTime < 0)
-			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-			}
 		}
 	}
 }

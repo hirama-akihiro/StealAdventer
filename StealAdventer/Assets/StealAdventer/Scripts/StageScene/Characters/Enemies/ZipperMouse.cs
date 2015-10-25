@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ZipperMouse : Enemy {
+public class ZipperMouse : NormalEnemy {
 	
 	#region Field
 	/// <summary>
@@ -16,11 +16,8 @@ public class ZipperMouse : Enemy {
 	private bool isAttack = false;
 	#endregion
 	
-	public float blinkerInterval;
 	private float blinkerTime;
-	public float mutekiTime;
 	public int dropProb;
-	
 	#endregion
 	
 	protected override void Start(){
@@ -28,10 +25,10 @@ public class ZipperMouse : Enemy {
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Moving;
 	}
-	
-	// Update is called once per frame
-	protected override void Update () {
 
+	// Update is called once per frame
+	protected override void Update()
+	{
 		if (nowHP <= 0)
 		{
 			contactDamage = 0;
@@ -39,73 +36,54 @@ public class ZipperMouse : Enemy {
 		}
 
 		attackTimer -= Time.deltaTime;
-		mutekiTime -= Time.deltaTime;
-		
-		// 無敵時間の点滅処理
-		if (mutekiTime > 0)
+
+		switch (nowState)
 		{
-			if (blinkerTime < 0)
-			{
-				// 自身と子オブジェクトのRendererを取得
-				Renderer[] objList = GetComponentsInChildren<Renderer>();
-				foreach (Renderer renderer in objList)
+			case (int)CharacterState.Moving:
 				{
-					renderer.enabled = !renderer.enabled;
+					isAttack = false;
+					myAnimation.Play("run");
+					CashedTransform.position = new Vector3(CashedTransform.position.x + (xSpeed / 40) * (float)nowAngle, CashedTransform.position.y, CashedTransform.position.z);
+					if (Mathf.Abs(CashedTransform.position.x - player.transform.position.x) <= 3 && attackTimer <= 0)
+					{
+						nowState = (int)CharacterState.Attacking;
+						attackTimer = startAttack;
+						myAnimation.Play("attack");
+					}
+					break;
 				}
-				blinkerTime = blinkerInterval;
-			}
-			blinkerTime -= Time.deltaTime;
-		}
-		else {
-			Renderer[] objList = GetComponentsInChildren<Renderer> ();
-			foreach (Renderer renderer in objList) {
-				if(!renderer.enabled)
-					renderer.enabled = !renderer.enabled;
-			}
-		}
-		
-		switch (nowState) {
-		case (int)CharacterState.Moving:
-		{
-			isAttack = false;
-			myAnimation.Play("run");
-			transform.position = new Vector3(transform.position.x + (xSpeed / 40) * (float)nowAngle, transform.position.y, transform.position.z);
-			if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 3 && attackTimer <= 0) {
-				nowState = (int)CharacterState.Attacking;
-				attackTimer = startAttack;
-				myAnimation.Play("attack");
-			}
-			break;
-		}
-		case (int)CharacterState.Attacking:
-		{
-			//攻撃発射
-			if(myAnimation["attack"].normalizedTime > 0.35f && !isAttack){
-				skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().attackSkilObject, LayerNames.EnemySkill);
-				isAttack = true;
-			}
-			
-			//移動モードに移行
-			if(myAnimation["attack"].time > myAnimation["attack"].length){
-				nowState = (int)CharacterState.Moving;
-			}
-			break;
-		}
-		case (int)CharacterState.Death:
-		{
-			transform.localScale = new Vector3(1, 1, 1);
-			myAnimation.Play("idle");
-			deathTime -= Time.deltaTime;
-			myRigidBody.isKinematic = true;
-			if(deathTime <= 0){
-				int drop = Random.Range(0, dropProb);
-				if(drop == 0)
-					Instantiate(dropItem, this.transform.position, Quaternion.Euler(0, 90, 0));
-				Instantiate(deathEffect, this.transform.position, Quaternion.Euler(0, 90, 0));
-				Destroy(gameObject);
-			}
-			break;
-		}
+			case (int)CharacterState.Attacking:
+				{
+					//攻撃発射
+					if (myAnimation["attack"].normalizedTime > 0.35f && !isAttack)
+					{
+						skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().attackSkilObject, LayerNames.EnemySkill);
+						isAttack = true;
+					}
+
+					//移動モードに移行
+					if (myAnimation["attack"].time > myAnimation["attack"].length)
+					{
+						nowState = (int)CharacterState.Moving;
+					}
+					break;
+				}
+			case (int)CharacterState.Death:
+				{
+					CashedTransform.localScale = new Vector3(1, 1, 1);
+					myAnimation.Play("idle");
+					deathTime -= Time.deltaTime;
+					myRigidBody.isKinematic = true;
+					if (deathTime <= 0)
+					{
+						int drop = Random.Range(0, dropProb);
+						if (drop == 0)
+							Instantiate(dropItem, CashedTransform.position, Quaternion.Euler(0, 90, 0));
+						Instantiate(deathEffect, CashedTransform.position, Quaternion.Euler(0, 90, 0));
+						Destroy(gameObject);
+					}
+					break;
+				}
 		}
 
 		//死亡
@@ -114,32 +92,8 @@ public class ZipperMouse : Enemy {
 			/* エネミー撃破数加算処理 */
 			ScoreManager.Instance.DefeatEnemy();
 			nowState = (int)CharacterState.Death;
-			transform.rotation = Quaternion.Euler(180, 90, 0);
-			transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-		}
-	}
-	
-	void OnTriggerEnter(Collider c){
-		string layerName = LayerMask.LayerToName (c.gameObject.layer);
-		if (layerName == "ReflectionArea") {
-			transform.Rotate (0, 180, 0);
-			if (nowAngle == CharacterAngle.Left)
-				nowAngle = CharacterAngle.Right;
-			else
-				nowAngle = CharacterAngle.Left;
-		}
-	}
-	
-	private void OnTriggerStay(Collider collision)
-	{
-		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-		if (layerName == LayerNames.PlayerSkill)
-		{
-			if (mutekiTime < 0)
-			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-			}
+			CashedTransform.rotation = Quaternion.Euler(180, 90, 0);
+			CashedTransform.position = new Vector3(CashedTransform.position.x, CashedTransform.position.y + 0.8f, CashedTransform.position.z);
 		}
 	}
 }

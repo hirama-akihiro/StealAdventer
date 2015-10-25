@@ -3947,7 +3947,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100264}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalPosition: {x: -20, y: .238000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 401026}
@@ -5069,6 +5069,7 @@ MonoBehaviour:
   ySpeed: 3
   jumpPower: 8
   skillObject: {fileID: 0}
+  blinkerInterval: .100000001
   stock: 3
   stockImages:
   - {fileID: 0}
@@ -5076,7 +5077,6 @@ MonoBehaviour:
   - {fileID: 0}
   isMovable: 1
   coolTimeRateObject: {fileID: 0}
-  blinkerInterval: .100000001
   normalHandUpper: {fileID: 140248, guid: eb03a5358761df548ac7a80174b4747d, type: 2}
   skillGetEffect: {fileID: 100000, guid: 5a7de8ead76644c7684f675f9cf58f04, type: 2}
 --- !u!114 &11448462

@@ -25,8 +25,6 @@ public class Minotaur : Enemy {
 	/// モードチェンジ用
 	/// </summary>
 	private Mode mode;
-	
-	private CharacterState nowState;
 
 	private Attack attack;
 
@@ -34,16 +32,6 @@ public class Minotaur : Enemy {
 	/// RigidBody
 	/// </summary>
 	private Rigidbody myRigidbody;
-
-	/// <summary>
-	/// Animation
-	/// </summary>
-	private Animation anim;
-
-	/// <summary>
-	/// プレイヤーのオブジェクト
-	/// </summary>
-	private GameObject player;
 
 	/// <summary>
 	/// モーションの時間を計る
@@ -65,82 +53,38 @@ public class Minotaur : Enemy {
 	/// </summary>
 	private int rushCount;
 
-	/// <summary>
-	/// 防御力
-	/// </summary>
-	private int def;
-
-	private SkillGeneratePointScript skillGeneratePoint;
 	public GameObject DF_NormalAttack;
 	public GameObject DF_Stamp;
 	public GameObject Stone;
 	public GameObject flamePillar;
 	private bool spawnDF;
-	private GameObject leftWall;
-	private GameObject rightWall;
 	private GameObject bossStageCenter;
 
 	private int oldHP;
 	private bool damaged;
 	private int damageTime;
-
-	public float blinkerInterval;
 	private float blinkerTime;
-	public float mutekiTime;
 	
 	// Use this for initialization
-	void Awake () {
+	protected override void Awake () {
+		base.Awake();
 		blitz = GetComponent<BlitzMode> ();
 		nowAngle = CharacterAngle.Right;
-		nowState = CharacterState.Standing;
+		nowState = (int)CharacterState.Standing;
 		myRigidbody = GetComponent<Rigidbody>();
-		anim = GetComponent<Animation> ();
+		myAnimation = GetComponent<Animation> ();
 		player = GameObject.Find("SDUnityChan");
-		leftWall = GameObject.Find("BossStage/MovableArea/LeftWall");
-		rightWall = GameObject.Find("BossStage/MovableArea/RightWall");
 		bossStageCenter = GameObject.Find("BossStageCenter");
 		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 		spawnDF = false;
 		oldHP = maxHP;
 		damaged = false;
 		mode = Mode.Normal;
-		if(nowHP < maxHP / 2)
-			mode = Mode.Blitz;
-		def = 0;
+		if (nowHP < maxHP / 2) { mode = Mode.Blitz; };
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		//Debug.Log (player.transform.position.x);
-
-		// 移動制限
-		//if (transform.position.x > 0) { transform.position = Vector3.zero; }
-
-		mutekiTime -= Time.deltaTime;
-
-		// 無敵時間の点滅処理
-		if (mutekiTime > 0)
-		{
-			if (blinkerTime < 0)
-			{
-				// 自身と子オブジェクトのRendererを取得
-				Renderer[] objList = GetComponentsInChildren<Renderer>();
-				foreach (Renderer renderer in objList)
-				{
-					renderer.enabled = !renderer.enabled;
-				}
-				blinkerTime = blinkerInterval;
-			}
-			blinkerTime -= Time.deltaTime;
-		}
-		else {
-			Renderer[] objList = GetComponentsInChildren<Renderer> ();
-			foreach (Renderer renderer in objList) {
-				if(!renderer.enabled)
-					renderer.enabled = !renderer.enabled;
-			}
-		}
-
+	protected override void Update () {
 		blitzTime -= Time.deltaTime;
 		if (mode == Mode.Blitz && blitzTime <= 0) {
 			Instantiate (blitz.spark, transform.position, transform.rotation);
@@ -153,18 +97,16 @@ public class Minotaur : Enemy {
 			AudioManager.Instance.PlayAudio("SEThunder");
 			mode = Mode.Blitz;
 			blitz.changeBlitz();
-			def=0;
 		}
-
 
 		//状態による行動記述
 		switch (nowState) {
-		case CharacterState.Standing:
+		case (int)CharacterState.Standing:
 		{
 			myRigidbody.isKinematic = true;
 			//attackTimer -= 1;
 			atkTimer -= Time.deltaTime;
-			anim.Play("Idle_1");
+			myAnimation.Play("Idle_1");
 			CheckAngle();
 
 			if(atkTimer <= 0)
@@ -172,12 +114,6 @@ public class Minotaur : Enemy {
 				spawnDF = false;
 				if(mode == Mode.Normal){
 					atkRand = Random.Range(0, 6);
-					/*if (Mathf.Abs (this.transform.position.x - player.transform.position.x) >= 5.5){
-						atkRand = 3;
-					}*/
-
-					//atkRand = 4;
-
 					switch(atkRand)
 					{
 					case 0://通常攻撃
@@ -196,7 +132,6 @@ public class Minotaur : Enemy {
 				}
 				else if(mode == Mode.Blitz){
 					atkRand = Random.Range(0, 4);
-					//atkRand = 3;
 					switch(atkRand)
 					{
 					case 0:
@@ -212,10 +147,10 @@ public class Minotaur : Enemy {
 			}
 			break;
 		}
-		case CharacterState.Moving:
+		case (int)CharacterState.Moving:
 		{
 			myRigidbody.isKinematic = true;
-			anim.Play("RunCycle");
+			myAnimation.Play("RunCycle");
 			CheckAngle();
 			transform.position = new Vector3(transform.position.x + (xSpeed / 20) * (float)nowAngle, transform.position.y, transform.position.z);
 
@@ -247,52 +182,51 @@ public class Minotaur : Enemy {
 			}
 			break;
 		}
-		case CharacterState.Attacking:
+		case (int)CharacterState.Attacking:
 		{
 			switch(attack) {
 			case Attack.NormalAttack://通常攻撃
 			{
-				if(anim["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
+				if(myAnimation["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
 					spawnDF = true;
 					AudioManager.Instance.PlayAudio("SERoar01");
 					skillGeneratePoint.GenerateSkill(DF_NormalAttack, LayerNames.EnemySkill);
 				}
 
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
 			case Attack.Stamp://振り下ろし
 			{
-				if(anim["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
+				if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
 					spawnDF = true;
 					AudioManager.Instance.PlayAudio("SERoar01");
 					skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
 				}
 
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
 			case Attack.JumpStamp://ジャンプ振り下ろし
 			{
-				if(anim["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
+				if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
 					spawnDF = true;
 					skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
 				}
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
 			case Attack.Rush://突進
 			{
-				//attackTimer -= 1;
 				atkTimer -= Time.deltaTime;
 				if(atkTimer < 2.5f){
-					anim.Play("RunCycle");
+					myAnimation.Play("RunCycle");
 					transform.position = new Vector3(transform.position.x + (xSpeed / 10) * (float)nowAngle, transform.position.y, transform.position.z);
 					if (Mathf.Abs (this.transform.position.x - player.transform.position.x) <= 2.5) {
 						if(nowHP < maxHP / 2)
@@ -307,25 +241,25 @@ public class Minotaur : Enemy {
 			}
 			case Attack.Throw://投げ
 			{
-				if(anim["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
+				if(myAnimation["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
 					AudioManager.Instance.PlayAudio("SERoar01");
 					spawnDF = true;
 					skillGeneratePoint.GenerateSkill(Stone, LayerNames.EnemySkill);
 				}
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
 			case Attack.FlamePillar://下から炎が出るやつ
 			{
-				if(anim["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
+				if(myAnimation["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
 					spawnDF = true;
 					skillGeneratePoint.GenerateSkill(flamePillar, LayerNames.EnemySkill);
 				}
 
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
@@ -360,12 +294,12 @@ public class Minotaur : Enemy {
 						rushCount++;
 						transform.position = new Vector3(player.transform.position.x - 2, b_position.y, transform.position.z);
 						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_1");
+						myAnimation.Play("Attack_1");
 						CheckAngle();
 					}
 				}
 				else if(rushCount == 1){
-					if(anim["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
+					if(myAnimation["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
 						AudioManager.Instance.PlayAudio("SERoar01");
 						AudioManager.Instance.PlayAudio("SEThunder");
 						spawnDF = true;
@@ -375,21 +309,12 @@ public class Minotaur : Enemy {
 						Instantiate(blitz.spark, transform.position, transform.rotation);
 						transform.position = new Vector3(player.transform.position.x + 2, b_position.y, transform.position.z);
 						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_3");
+						myAnimation.Play("Attack_3");
 						CheckAngle();
 					}
-					/*if(!anim.isPlaying){
-						rushCount++;
-						spawnDF = false;
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						transform.position = new Vector3(player.transform.position.x + 1, b_position.y, transform.position.z);
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_3");
-						CheckAngle();
-					}*/
 				}
 				else if(rushCount == 2){
-					if(anim["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
+					if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
 						AudioManager.Instance.PlayAudio("SEThunder");
 						spawnDF = true;
 						skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
@@ -398,21 +323,12 @@ public class Minotaur : Enemy {
 						Instantiate(blitz.spark, transform.position, transform.rotation);
 						transform.position = new Vector3(player.transform.position.x - 4, b_position.y, transform.position.z);
 						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_2");
+						myAnimation.Play("Attack_2");
 						CheckAngle();
 					}
-					/*if(!anim.isPlaying){
-						rushCount++;
-						spawnDF = false;
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						transform.position = new Vector3(player.transform.position.x - 2, b_position.y, transform.position.z);
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_2");
-						CheckAngle();
-					}*/
 				}
 				else if(rushCount == 3){
-					if(anim["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
+					if(myAnimation["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
 						AudioManager.Instance.PlayAudio("SERoar01");
 						AudioManager.Instance.PlayAudio("SEThunder");
 						spawnDF = true;
@@ -422,26 +338,17 @@ public class Minotaur : Enemy {
 						Instantiate(blitz.spark, transform.position, transform.rotation);
 						transform.position = new Vector3(player.transform.position.x + 2, b_position.y, transform.position.z);
 						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_3");
+						myAnimation.Play("Attack_3");
 						CheckAngle();
 					}
-					/*if(!anim.isPlaying){
-						rushCount++;
-						spawnDF = false;
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						transform.position = new Vector3(player.transform.position.x + 1, b_position.y, transform.position.z);
-						Instantiate(blitz.spark, transform.position, transform.rotation);
-						anim.Play("Attack_3");
-						CheckAngle();
-					}*/
 				}
 				else if(rushCount == 4){
-					if(anim["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
+					if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
 						spawnDF = true;
 						skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
 					}
-					if(!anim.isPlaying){
-						nowState = CharacterState.Standing;
+					if(!myAnimation.isPlaying){
+						nowState = (int)CharacterState.Standing;
 					}
 				}
 				break;
@@ -450,45 +357,41 @@ public class Minotaur : Enemy {
 			{
 				atkTimer -= Time.deltaTime;
 				if(atkTimer <= 0 && transform.position.y > 15){
-					//float center = (rightWall.transform.position.x - leftWall.transform.position.x)/2 + leftWall.transform.position.x;
 					float center = bossStageCenter.transform.position.x;
 					if(player.transform.position.x <= center)
 						transform.position = new Vector3(center + 4, b_position.y, transform.position.z);
 					else
 						transform.position = new Vector3(center - 4, b_position.y, transform.position.z);
-					//transform.position = new Vector3(player.transform.position.x - 2, b_position.y, transform.position.z);
-					//Instantiate(blitz.spark, transform.position, transform.rotation);
-					anim.Play("Attack_2");
+					myAnimation.Play("Attack_2");
 					CheckAngle();
 				}
 
-				if(anim["Attack_2"].normalizedTime > 0.45f && anim["Attack_2"].normalizedTime < 0.60f){
+				if(myAnimation["Attack_2"].normalizedTime > 0.45f && myAnimation["Attack_2"].normalizedTime < 0.60f){
 					AudioManager.Instance.PlayAudio("SEThunder");
-					//spawnDF = true;
 					skillGeneratePoint.GenerateSkill(blitz.BlitzGazor, LayerNames.EnemySkill);
 				}
-				if(!anim.isPlaying){
-					nowState = CharacterState.Standing;
+				if(!myAnimation.isPlaying){
+					nowState = (int)CharacterState.Standing;
 				}
 				break;
 			}
 			}
 			break;
 		}
-		case CharacterState.Damage:
+		case (int)CharacterState.Damage:
 		{
 			break;
 		}
-		case CharacterState.Death:
+		case (int)CharacterState.Death:
 		{
-			anim.Play("Die");
+			myAnimation.Play("Die");
 			break;
 		}
 		}
 		
 		if (IsDestroy) {
-			anim.Play("Die");
-			nowState = CharacterState.Death;
+			myAnimation.Play("Die");
+			nowState = (int)CharacterState.Death;
 		}
 
 		if (damaged) {
@@ -522,17 +425,16 @@ public class Minotaur : Enemy {
 	/// 移動開始
 	/// </summary>
 	public void StartMoving(){
-		nowState = CharacterState.Moving;
-		anim.Play("RunCycle");
+		nowState = (int)CharacterState.Moving;
+		myAnimation.Play("RunCycle");
 		CheckAngle();
-		//attackTimer = 100;
 	}
 
 	/// <summary>
 	/// 攻撃開始時の処理
 	/// </summary>
 	public void StartAttack(){
-		nowState = CharacterState.Attacking;
+		nowState = (int)CharacterState.Attacking;
 		CheckAngle ();
 	}
 
@@ -541,10 +443,9 @@ public class Minotaur : Enemy {
 	/// </summary>
 	public void NormalAttack(){
 		StartAttack ();
-		//attackTimer = 100;
 		atkTimer = 2.0f;
 		attack = Attack.NormalAttack;
-		anim.Play ("Attack_1");
+		myAnimation.Play ("Attack_1");
 	}
 
 	/// <summary>
@@ -552,21 +453,19 @@ public class Minotaur : Enemy {
 	/// </summary>
 	public void Stamp(){
 		StartAttack ();
-		//attackTimer = 99;
 		atkTimer = 2.0f;
 		attack = Attack.Stamp;
-		anim.Play("Attack_3");
+		myAnimation.Play("Attack_3");
 	}
 	
 	public void JumpStamp(){
 		myRigidbody.isKinematic = false;
 		StartAttack ();
-		//attackTimer = 100;
 		attack = Attack.JumpStamp;
 		myRigidbody.AddForce(Vector3.up*8, ForceMode.VelocityChange);
 		myRigidbody.AddForce(Vector3.right*3*(int)nowAngle, ForceMode.VelocityChange);
 
-		anim.Play("Attack_3");
+		myAnimation.Play("Attack_3");
 	}
 
 	/// <summary>
@@ -574,10 +473,9 @@ public class Minotaur : Enemy {
 	/// </summary>
 	public void Rush(){
 		StartAttack ();
-		//attackTimer = 200;
 		atkTimer = 5.0f;
 		attack = Attack.Rush;
-		anim.Play("Idle_2");
+		myAnimation.Play("Idle_2");
 	}
 
 	/// <summary>
@@ -585,10 +483,9 @@ public class Minotaur : Enemy {
 	/// </summary>
 	public void Throw(){
 		StartAttack ();
-		//attackTimer = 100;
 		atkTimer = 2.0f;
 		attack = Attack.Throw;
-		anim.Play("Attack_2");
+		myAnimation.Play("Attack_2");
 	}
 
 	//下から炎が出るやつ
@@ -596,7 +493,7 @@ public class Minotaur : Enemy {
 		StartAttack ();
 		atkTimer = 3.0f;
 		attack = Attack.FlamePillar;
-		anim.Play("Attack_2");
+		myAnimation.Play("Attack_2");
 	}
 
 	/// <summary>
@@ -647,7 +544,7 @@ public class Minotaur : Enemy {
 	/// <param name="a">The alpha component.</param>
 	/// <param name="s">S.</param>
 	public void ChangeAnimationSpeed(string a, float s){
-		anim [a].speed = s;
+		myAnimation [a].speed = s;
 	}
 
 	/// <summary>
@@ -658,24 +555,6 @@ public class Minotaur : Enemy {
 			damaged = true;
 			damageTime = 10;
 			oldHP = nowHP;
-		}
-	}
-
-	/// <summary>
-	/// 衝突時に一回だけ呼ばれるメソッド
-	/// </summary>
-	/// <param name="collision"></param>
-	private void OnTriggernEnter(Collider collision)
-	{
-		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-		if (layerName == LayerNames.PlayerSkill)
-		{
-			myRigidbody.isKinematic = true;
-			if (mutekiTime < 0)
-			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-			}
 		}
 	}
 	
@@ -690,23 +569,10 @@ public class Minotaur : Enemy {
 		{
 			if (mutekiTime < 0)
 			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
-				mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
+				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
+				mutekiTime = 1;
 			}
 		}
-	}
-
-	private void OnTriggerStay(Collider collision)
-	{
-        string layerName = LayerMask.LayerToName(collision.gameObject.layer);
-        if (layerName == LayerNames.PlayerSkill)
-        {
-            if (mutekiTime < 0)
-            {
-                nowHP -= collision.gameObject.GetComponent<SkillParam>().damege - def;
-                mutekiTime = 1; // 現状無敵時間を2秒にしている：長いかも
-            }
-        }
 	}
 
 	/// <summary>
@@ -715,13 +581,11 @@ public class Minotaur : Enemy {
 	public override void GameEnd()
 	{
 		enabled = false;
-		CapsuleCollider cCollider;
-		cCollider = GetComponent<CapsuleCollider>();
 		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2);
 		if (IsDestroy)
 		{
-			anim.Play("Die");
-			nowState = CharacterState.Death;
+			myAnimation.Play("Die");
+			nowState = (int)CharacterState.Death;
 		}
 	}
 }

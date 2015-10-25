@@ -18,11 +18,6 @@ public class UnityChanController : Player {
 	public List<GameObject> stockImages;
 
 	/// <summary>
-	/// スキル発生地点
-	/// </summary>
-	private SkillGeneratePointScript skillGeneratePoint;
-
-	/// <summary>
 	/// キャラクターの状態
 	/// </summary>
 	enum CharacterState { Idling = 0, Running = 1, Jumping = 2, NormalAttack = 3, SkillAttack = 4, StealAttack = 5 };
@@ -57,6 +52,9 @@ public class UnityChanController : Player {
 	/// </summary>
 	private float nowCoolTime = 0;
 
+	/// <summary>
+	/// 現フレームの通常攻撃のクールタイム
+	/// </summary>
 	private float nowUpperCoolTime = 0;
 
 	/// <summary>
@@ -75,16 +73,6 @@ public class UnityChanController : Player {
 	private Image coolTimeImage;
 
 	/// <summary>
-	/// 無敵時間
-	/// </summary>
-	private float mutekiTime = -1;
-
-	/// <summary>
-	/// 点滅間隔
-	/// </summary>
-	public float blinkerInterval;
-
-	/// <summary>
 	/// アッパー用ノーマルハンド
 	/// </summary>
 	public GameObject normalHandUpper;
@@ -97,7 +85,6 @@ public class UnityChanController : Player {
 	protected override void Awake()
 	{
 		base.Awake();
-		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Idling;
 		coolTimeImage = coolTimeRateObject.GetComponent<Image>();
@@ -110,11 +97,12 @@ public class UnityChanController : Player {
 	}
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+		base.Start();
 	}
 	
 	// Update is called once per frame
-	public override void Update ()
+	protected override void Update ()
 	{
 		base.Update();
 		// 体力が0の時にリスポーンする
@@ -182,7 +170,7 @@ public class UnityChanController : Player {
 
 		nowState = (int)CharacterState.Jumping;
 		isJump = true;
-		myRigidbody.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+		myRigidbody.AddForce(CashedTransform.up * jumpPower, ForceMode.Impulse);
 		SEManager.Instance.PlayAudio("VoiceJump");
 	}
 
@@ -239,14 +227,8 @@ public class UnityChanController : Player {
 		if (nowUpperCoolTime > 0) { return; }
 
 		nowState = (int)CharacterState.NormalAttack;
-		GameObject upperPos = GameObject.Find("UpperPoint");
 		GameObject hand = Instantiate(normalHandUpper) as GameObject;
-		if (nowAngle == CharacterAngle.Left)
-		{
-			//hand.transform.position += new Vector3(0, 0, -1);
-			hand.transform.Rotate(180, 0, 0);
-
-		}
+		if (nowAngle == CharacterAngle.Left) { hand.transform.Rotate(180, 0, 0); }
 		IsControllable = false;
 		isMovable = false;
 		nowUpperCoolTime = normalHandUpper.GetComponent<SkillParam>().coolTime;
@@ -268,17 +250,12 @@ public class UnityChanController : Player {
 		{
 			DamegeMethod(collision.gameObject.GetComponent<SkillParam>().damege);
 		}
-		else if(layerName == LayerNames.BossEnemy || layerName == LayerNames.NormalEnemy)
+		else if (layerName == LayerNames.BossEnemy || layerName == LayerNames.NormalEnemy)
 		{
 			DamegeMethod(collision.gameObject.GetComponent<Character>().contactDamage);
 		}
-
 	}
 
-	/// <summary>
-	/// 衝突している間ずっと呼ばれるメソッド
-	/// </summary>
-	/// <param name="collision"></param>
 	private void OnCollisionStay(Collision collision)
 	{
 		string layerName = LayerMask.LayerToName(collision.gameObject.layer);
@@ -294,7 +271,6 @@ public class UnityChanController : Player {
 
 	private void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log(collider);
 		string layerName = LayerMask.LayerToName(collider.gameObject.layer);
 		if (layerName == LayerNames.EnemySkill)
 		{
@@ -311,12 +287,10 @@ public class UnityChanController : Player {
 		if (mutekiTime > 0) { return; }
 		if (damege <= 0) { return; }
 
-		myRigidbody.isKinematic = true;
 		nowHP -= damege;
 		ScoreManager.Instance.AddDamagedScore(damege);
 		mutekiTime = 1;
 		AudioManager.Instance.PlayAudio("VoiceDamage");
-		myRigidbody.isKinematic = false;
 		if (nowHP > 0) { StartCoroutine("MutekiFlashing"); }
 		else { mutekiTime = -1; }
 	}
@@ -330,10 +304,10 @@ public class UnityChanController : Player {
 		switch(angle)
 		{
 			case CharacterAngle.Left:
-				transform.rotation = Quaternion.Euler(0, 270, 0);
+				CashedTransform.rotation = Quaternion.Euler(0, 270, 0);
 				break;
 			case CharacterAngle.Right:
-				transform.rotation = Quaternion.Euler(0, 90, 0);
+				CashedTransform.rotation = Quaternion.Euler(0, 90, 0);
 				break;
 		}
 	}
@@ -350,38 +324,8 @@ public class UnityChanController : Player {
 	}
 
 	/// <summary>
-	/// 無敵時間中に点滅させるコルーチン
+	/// スキル取得時のエフェクト生成
 	/// </summary>
-	/// <returns></returns>
-	private IEnumerator MutekiFlashing()
-	{
-		gameObject.layer = LayerMask.NameToLayer(LayerNames.MutekiPlayer);
-		while (mutekiTime > 0)
-		{
-			SetRendererEnable(true);
-			yield return new WaitForSeconds(blinkerInterval);
-			SetRendererEnable(false);
-			yield return new WaitForSeconds(blinkerInterval);
-			mutekiTime -= blinkerInterval * 2;
-		}
-
-		SetRendererEnable(true);
-		gameObject.layer = LayerMask.NameToLayer(LayerNames.Player);
-	}
-
-	/// <summary>
-	/// キャラクターのレンダラーアルファ値を設定するメソッド
-	/// </summary>
-	/// <param name="alpha"></param>
-	public void SetRendererEnable(bool enable)
-	{
-		Renderer[] objList = GetComponentsInChildren<Renderer>();
-		foreach (Renderer renderer in objList)
-		{
-			renderer.enabled = enable;
-		}
-	}
-
 	public void InstansiateGetSkillEffect()
 	{
 		if (skillGetEffect)
@@ -391,11 +335,15 @@ public class UnityChanController : Player {
 		}
 	}
 
-	public bool IsRespanable()
-	{
-		return myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f;
-	}
+	/// <summary>
+	/// リスポーン可能かどうか
+	/// </summary>
+	/// <returns></returns>
+	public bool IsRespanable() { return myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f; }
 
+	/// <summary>
+	/// HP全回復
+	/// </summary>
 	public void FullHeal() { nowHP = maxHP; }
 
 	#region ManagerClassCallMethod

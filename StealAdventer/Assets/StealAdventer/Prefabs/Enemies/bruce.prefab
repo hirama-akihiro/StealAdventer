@@ -1643,11 +1643,10 @@ MonoBehaviour:
   ySpeed: 3
   jumpPower: 7
   skillObject: {fileID: 131494, guid: 9c0d4df700c1da44a99b4bc7cc260a72, type: 2}
+  blinkerInterval: .100000001
   deathEffect: {fileID: 118508, guid: ae95aa490a52d274b98d0f932e059500, type: 2}
   dropItem: {fileID: 164682, guid: 020821c391aa586429345dd56bf7c91e, type: 2}
   slash: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
-  blinkerInterval: 0
-  mutekiTime: 0
   dropProb: 3
 --- !u!114 &11480878
 MonoBehaviour:
@@ -1817,6 +1816,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: nowHP
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: blinkerInterval
+      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

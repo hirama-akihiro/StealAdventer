@@ -11,6 +11,16 @@ public class Character : MonoBehaviour {
 	/// </summary>
 	private Transform cashedTransform;
 
+	/// <summary>
+	/// キャッシュPosition
+	/// </summary>
+	private Vector3 cashedPosition;
+
+	/// <summary>
+	/// スキル発生地点
+	/// </summary>
+	protected SkillGeneratePointScript skillGeneratePoint;
+
 	#region CharacterStatus
 	/// <summary>
 	/// キャラクターの最大体力パラメータ
@@ -53,7 +63,7 @@ public class Character : MonoBehaviour {
 	protected CharacterAngle nowAngle;
 
 	/// <summary>
-	/// キャラクターの現在の向き
+	/// キャラクターの現在の状態
 	/// </summary>
 	protected int nowState;
 
@@ -61,15 +71,27 @@ public class Character : MonoBehaviour {
 	/// Skillオブジェクト
 	/// </summary>
 	public GameObject skillObject;
+
+	/// <summary>
+	/// 無敵時間
+	/// </summary>
+	protected float mutekiTime;
+
+	/// <summary>
+	/// 点滅間隔
+	/// </summary>
+	public float blinkerInterval;
 	#endregion
+	protected virtual void Awake() { }
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		nowHP = maxHP;
+		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 	
 	}
 
@@ -83,6 +105,28 @@ public class Character : MonoBehaviour {
 			if (cashedTransform == null) { cashedTransform = GetComponent<Transform>(); }
 			return cashedTransform;
 		}
+	}
+
+	/// <summary>
+	/// キャッシュPosition
+	/// </summary>
+	public Vector3 CashedPosition
+	{
+		get
+		{
+			if(cashedPosition == null) { cashedPosition = GetComponent<Transform>().position; }
+			return cashedPosition;
+		}
+	}
+
+	/// <summary>
+	/// キャラクターのレンダラー表示，非表示を設定するメソッド
+	/// </summary>
+	/// <param name="alpha"></param>
+	public void SetRendererEnable(bool enable)
+	{
+		Renderer[] objList = GetComponentsInChildren<Renderer>();
+		foreach (Renderer renderer in objList) { renderer.enabled = enable; }
 	}
 
 	/// <summary>

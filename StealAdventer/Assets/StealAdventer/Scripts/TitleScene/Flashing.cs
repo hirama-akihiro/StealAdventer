@@ -5,15 +5,12 @@ using System.Collections.Generic;
 
 public class Flashing : MonoBehaviour
 {
-
 	public float fadeTime;
-	Color myColor;
 	int cnt;
 
 	// Use this for initialization
 	void Start()
 	{
-		myColor = GetComponent<Text>().color;
 		cnt = 0;
 	}
 

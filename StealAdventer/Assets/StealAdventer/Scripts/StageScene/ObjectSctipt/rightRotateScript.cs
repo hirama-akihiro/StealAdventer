@@ -3,30 +3,25 @@ using System.Collections;
 
 public class rightRotateScript : MonoBehaviour {
 
-    private Vector3 pos;
-    private Rigidbody myRigidbody;
-
-    private Vector3 rot; 
-
+	/// <summary>
+	/// 回転数
+	/// </summary>
 	private int rotateCount = 0;
-	public float ungle;
 
-	public bool IsTrapOn{ get; set;}
+	/// <summary>
+	/// 回転角度
+	/// </summary>
+	public float ungle;
 
 	// Use this for initialization
 	void Start () {
 		IsTrapOn = false;
-        pos = transform.position;
-        myRigidbody = GetComponent<Rigidbody>();
-        rot = Vector3.zero;
 	}
 	
 	// Update is called once per frame
 	public void Update () 
 	{
-		if (IsTrapOn) {
-			Rotate ();
-		}
+		if (IsTrapOn) { Rotate(); }
 	}
 
 	/// <summary>
@@ -34,11 +29,12 @@ public class rightRotateScript : MonoBehaviour {
 	/// </summary>
 	public void Rotate()
 	{
-		//Debug.Log (rotateCount);
-		if (rotateCount <= ungle) {
-			this.transform.Rotate (new Vector3 (0, 0, 1), 1);
+		if (rotateCount <= ungle)
+		{
+			this.transform.Rotate(new Vector3(0, 0, 1), 1);
 			rotateCount++;
 		}
 	}
 
+	public bool IsTrapOn { get; set; }
 }
