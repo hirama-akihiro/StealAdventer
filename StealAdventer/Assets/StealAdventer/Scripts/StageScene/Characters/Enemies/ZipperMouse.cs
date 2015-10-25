@@ -8,36 +8,6 @@ public class ZipperMouse : Enemy {
 	/// キャラクターの状態
 	/// </summary>
 	enum CharacterState { Idling = 0, Moving = 1, Attacking = 2, Damage = 3, Death = 4};
-
-	/// <summary>
-	/// Animation
-	/// </summary>
-	private Animation myAnimation;
-	
-	/// <summary>
-	/// プレイヤーオブジェクト
-	/// </summary>
-	private GameObject player;
-	
-	/// <summary>
-	/// rigidBody
-	/// </summary>
-	private Rigidbody myRigidBody;
-	
-	/// <summary>
-	/// 攻撃位置スクリプト
-	/// </summary>
-	private SkillGeneratePointScript skillGeneratePoint;
-
-	/// <summary>
-	/// 死亡時エフェクト
-	/// </summary>
-	public GameObject deathEffect;
-
-	/// <summary>
-	/// ドロップアイテム
-	/// </summary>
-	public GameObject dropItem;
 	
 	#region 計測用変数
 	private float deathTime = 2;
@@ -53,17 +23,14 @@ public class ZipperMouse : Enemy {
 	
 	#endregion
 	
-	void Start(){
+	protected override void Start(){
+		base.Start();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Moving;
-		myAnimation = GetComponent<Animation>();
-		myRigidBody = GetComponent<Rigidbody> ();
-		player = GameObject.Find("SDUnityChan");
-		skillGeneratePoint = GetComponent<SkillGeneratePointScript>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 
 		if (nowHP <= 0)
 		{
@@ -150,11 +117,6 @@ public class ZipperMouse : Enemy {
 			transform.rotation = Quaternion.Euler(180, 90, 0);
 			transform.position = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
 		}
-
-		//プレイヤーが遠く離れると消滅
-		//if (Mathf.Abs (this.transform.position.x - player.transform.position.x) >= 20) {
-		//	Destroy(gameObject);
-		//}
 	}
 	
 	void OnTriggerEnter(Collider c){

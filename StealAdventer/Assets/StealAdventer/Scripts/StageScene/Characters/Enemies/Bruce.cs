@@ -3,13 +3,7 @@ using System.Collections;
 
 public class Bruce : Enemy {
 
-	/// <summary>
-	/// animation
-	/// </summary>
-	private Animation myAnimation;
-
 	#region アニメーションフレーム
-
 	private float stop_s = 0.01f;
 	private float stop_e = 0.06f;
 
@@ -23,7 +17,6 @@ public class Bruce : Enemy {
 
 	private float death_s = 0.85f;
 	private float death_e = 0.93f;
-
 	#endregion
 
 	#region Field
@@ -36,6 +29,7 @@ public class Bruce : Enemy {
 	/// 攻撃パターン
 	/// </summary>
 	enum Attack {Slash=0 };
+
 	private Attack attack;
 	
 	/// <summary>
@@ -44,34 +38,9 @@ public class Bruce : Enemy {
 	public GameObject slash;
 	
 	/// <summary>
-	/// プレイヤーオブジェクト
-	/// </summary>
-	private GameObject player;
-	
-	/// <summary>
-	/// rigidBody
-	/// </summary>
-	private Rigidbody myRigidBody;
-	
-	/// <summary>
 	/// capsuleCollider
 	/// </summary>
 	private CapsuleCollider capsuleCollider;
-	
-	/// <summary>
-	/// 攻撃位置スクリプト
-	/// </summary>
-	private SkillGeneratePointScript skillGeneratePoint;
-
-	/// <summary>
-	/// 死亡時エフェクト
-	/// </summary>
-	public GameObject deathEffect;
-
-	/// <summary>
-	/// ドロップアイテム
-	/// </summary>
-	public GameObject dropItem;
 	
 	#region 計測用変数
 	private float deathTime = 2;

@@ -114,10 +114,9 @@ public class UnityChanController : Player {
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
-		// 基底クラスの呼び出し
+	public override void Update ()
+	{
 		base.Update();
-
 		// 体力が0の時にリスポーンする
 		if (nowHP < 0 && mutekiTime < 0)
 		{
@@ -128,7 +127,6 @@ public class UnityChanController : Player {
 			IsWorping = true;
 			for (int i = 0; i < stockImages.Count; i++)
 			{
-				//if (i >= stock) { stockImages[i].GetComponent<Image>().enabled = false; }
 				if (i >= stock) 
 				{ 
 					//stockImages[i].GetComponent<Image>().enabled = false;
@@ -401,7 +399,6 @@ public class UnityChanController : Player {
 	public void FullHeal() { nowHP = maxHP; }
 
 	#region ManagerClassCallMethod
-
 	/// <summary>
 	/// プレイヤーが死んでいるかどうか
 	/// </summary>
