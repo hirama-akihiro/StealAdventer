@@ -102,7 +102,7 @@ public class ZipperMouse_C : NormalEnemy
 			nowState = (int)CharacterState.Explosion;
 			isExplode = true;
 			/* エネミー撃破数加算処理 */
-			ScoreManager.Instance.DefeatEnemy();
+			ScoreManager.I.DefeatEnemy();
 		}
 	}
 }

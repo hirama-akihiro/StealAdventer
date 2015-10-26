@@ -16,10 +16,10 @@ public class InfoSceneManager : MonoBehaviour {
 		if (isLoadLevel) {
 			return;
 		}
-		if (UserInput.Instance.PressAnyKey)
+		if (UserInput.I.PressAnyKey)
 		{
 			isLoadLevel = true;
-			AudioManager.Instance.PlayAudio("SEButtonClick");
+			AudioManager.I.PlayAudio("SEButtonClick");
 			FadeManager.Instance.LoadLevel("StageScene", 0.5f);
 		}	
 	}

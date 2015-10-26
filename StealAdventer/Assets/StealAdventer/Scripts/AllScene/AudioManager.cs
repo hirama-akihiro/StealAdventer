@@ -32,7 +32,7 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>{
 	protected override void Awake()
 	{
 		base.Awake();
-		if (this != Instance) { Destroy(this); return; }
+		if (this != I) { Destroy(this); return; }
 		DontDestroyOnLoad(this.gameObject);
 
 		if (FindObjectsOfType(typeof(AudioListener)).All(o => !((AudioListener)o).enabled)) { this.gameObject.AddComponent<AudioListener>(); }

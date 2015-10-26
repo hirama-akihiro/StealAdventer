@@ -26,19 +26,19 @@ public class LegCollider : MonoBehaviour {
 			unityController.IsJump = false;
 			unityController.SetBool("Jump", false);
 		}
-		if(layerName == LayerNames.Stage_BossFloorObject && !GameEnder.Instance.IsFinish)
+		if(layerName == LayerNames.Stage_BossFloorObject && !GameEnder.I.IsFinish)
 		{
 			 // ターゲットカメラの位置を固定
-			TargetCamera.Instance.isCompliance = false;
-			TargetCamera.Instance.transform.position = new Vector3(200, 2, -15);
+			TargetCamera.I.isCompliance = false;
+			TargetCamera.I.transform.position = new Vector3(200, 2, -15);
 
 			minotaur.enabled = true;
 			GameObject.Find("DataCanvas").transform.FindChild("HP(Enemy)").GetComponent<HPGauge>().GaugeDisplay(GameObject.Find("Minotaur"));
 
-			if (AudioManager.Instance.IsPlaying("Fight"))
+			if (AudioManager.I.IsPlaying("Fight"))
 			{
-				AudioManager.Instance.StopAudio("Fight");
-				AudioManager.Instance.PlayAudio("bossBattle", AudioManager.PlayMode.Repeat);
+				AudioManager.I.StopAudio("Fight");
+				AudioManager.I.PlayAudio("bossBattle", AudioManager.PlayMode.Repeat);
 			}
 		}
 	}

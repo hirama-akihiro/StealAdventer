@@ -90,7 +90,7 @@ public class ZipperMouse : NormalEnemy {
 		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			/* エネミー撃破数加算処理 */
-			ScoreManager.Instance.DefeatEnemy();
+			ScoreManager.I.DefeatEnemy();
 			nowState = (int)CharacterState.Death;
 			CashedTransform.rotation = Quaternion.Euler(180, 90, 0);
 			CashedTransform.position = new Vector3(CashedTransform.position.x, CashedTransform.position.y + 0.8f, CashedTransform.position.z);

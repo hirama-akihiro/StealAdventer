@@ -101,7 +101,7 @@ public class StealHandScript : MonoBehaviour {
                 playerObject.GetComponent<Character>().skillObject = stealSkillObject;
                 dataCanvas.transform.FindChild("Skill").GetComponent<SkillImageScript>().ChangeSkillImage();
 				playerObject.SendMessage("InstansiateGetSkillEffect");
-				AudioManager.Instance.PlayAudio("SESkillGet");
+				AudioManager.I.PlayAudio("SESkillGet");
             }
 			playerObject.GetComponent<UnityChanController>().IsControllable = true;
 			playerObject.GetComponent<UnityChanController>().isMovable = true;

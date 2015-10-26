@@ -20,7 +20,7 @@ public class UnderCameraPoint : MonoBehaviour {
 		{
 			if (!collider.gameObject.GetComponent<UnityChanController>().IsWorping)
 			{
-				TargetCamera.Instance.isCompliance = false;
+				TargetCamera.I.isCompliance = false;
 			}
 		}
 	}

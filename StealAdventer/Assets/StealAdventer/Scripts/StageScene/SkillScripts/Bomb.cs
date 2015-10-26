@@ -43,7 +43,7 @@ public class Bomb : MonoBehaviour {
         effectObject = GameObject.Instantiate(effectObjectOrigin);
         effectObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
 
-        AudioManager.Instance.PlayAudio("SEExplosion");
+        AudioManager.I.PlayAudio("SEExplosion");
         Destroy(effectObject, 1.5f);
         Destroy(gameObject);
     }

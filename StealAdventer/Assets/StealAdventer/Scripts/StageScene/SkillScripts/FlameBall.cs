@@ -32,7 +32,7 @@ public class FlameBall : MonoBehaviour {
 	void Start () {
         //spawn = GameObject.Find("SkillGeneratePoint");
         //GetComponent<Rigidbody>().velocity = spawn.transform.right * skillSpeed;
-        AudioManager.Instance.PlayAudio("SEFrameBall");
+        AudioManager.I.PlayAudio("SEFrameBall");
 	}
 	
 	// Update is called once per frame

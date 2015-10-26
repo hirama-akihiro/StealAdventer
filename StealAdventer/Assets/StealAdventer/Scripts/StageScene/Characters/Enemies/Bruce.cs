@@ -147,7 +147,7 @@ public class Bruce : NormalEnemy {
 		if (nowHP <= 0 && nowState != (int)CharacterState.Death)
 		{
 			/* エネミー撃破数加算処理 */
-			ScoreManager.Instance.DefeatEnemy();
+			ScoreManager.I.DefeatEnemy();
 			nowState = (int)CharacterState.Death;
 			myAnimation.Play("Take 0010");
 			myAnimation["Take 0010"].normalizedTime = death_s;

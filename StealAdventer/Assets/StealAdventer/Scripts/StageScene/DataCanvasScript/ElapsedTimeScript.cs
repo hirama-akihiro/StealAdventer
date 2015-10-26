@@ -18,7 +18,7 @@ public class ElapsedTimeScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(isGamePlaying)
-            this.GetComponent<Text>().text = new DateTime(0).Add(ScoreManager.Instance.GetElapsedTime()).ToString("mm:ss");
+            this.GetComponent<Text>().text = new DateTime(0).Add(ScoreManager.I.GetElapsedTime()).ToString("mm:ss");
 	}
 
     public void GameStart()

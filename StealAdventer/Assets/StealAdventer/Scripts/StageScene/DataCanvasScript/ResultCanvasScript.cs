@@ -116,43 +116,43 @@ public class ResultCanvasScript : MonoBehaviour {
 		//yield return null;
 		yield return new WaitForSeconds(displayInterval);
         clearTimeText.transform.parent.gameObject.SetActive(true);
-        clearTimeText.text = new DateTime(0).Add(ScoreManager.Instance.ClearTime).ToString("mm:ss");
-        clearTimePointText.text = ScoreManager.Instance.GetClearTimePoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        clearTimeText.text = new DateTime(0).Add(ScoreManager.I.ClearTime).ToString("mm:ss");
+        clearTimePointText.text = ScoreManager.I.GetClearTimePoint().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         coinsText.transform.parent.gameObject.SetActive(true);
-        coinsText.text = ScoreManager.Instance.Coins.ToString();
-        coinsPointText.text = ScoreManager.Instance.GetCoinsPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        coinsText.text = ScoreManager.I.Coins.ToString();
+        coinsPointText.text = ScoreManager.I.GetCoinsPoint().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         damagesText.transform.parent.gameObject.SetActive(true);
-        damagesText.text = ScoreManager.Instance.DamagedScore.ToString();
-        damagesPointText.text = ScoreManager.Instance.GetDamagesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        damagesText.text = ScoreManager.I.DamagedScore.ToString();
+        damagesPointText.text = ScoreManager.I.GetDamagesPoint().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         defeatEnemiesText.transform.parent.gameObject.SetActive(true);
-        defeatEnemiesText.text = ScoreManager.Instance.DefeatEnemyScore.ToString();
-        defeatEnemiesPointText.text = ScoreManager.Instance.GetDefeatEnemiesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        defeatEnemiesText.text = ScoreManager.I.DefeatEnemyScore.ToString();
+        defeatEnemiesPointText.text = ScoreManager.I.GetDefeatEnemiesPoint().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         playerDeadTimesText.transform.parent.gameObject.SetActive(true);
-        playerDeadTimesText.text = ScoreManager.Instance.PlayerDeadTimes.ToString();
-        playerDeadTimesPointText.text = ScoreManager.Instance.GetPlayerDeadTimesPoint().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        playerDeadTimesText.text = ScoreManager.I.PlayerDeadTimes.ToString();
+        playerDeadTimesPointText.text = ScoreManager.I.GetPlayerDeadTimesPoint().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         yield return new WaitForSeconds(displayInterval);
         totalPointText.transform.parent.parent.gameObject.SetActive(true);
         transform.FindChild("Line").gameObject.SetActive(true);
-        totalPointText.text = ScoreManager.Instance.GetFinalScore().ToString() + "P";
-        AudioManager.Instance.PlayAudio("SETextDisplay");
+        totalPointText.text = ScoreManager.I.GetFinalScore().ToString() + "P";
+        AudioManager.I.PlayAudio("SETextDisplay");
 
         char rank;
 
-        int finalScore = ScoreManager.Instance.GetFinalScore();
+        int finalScore = ScoreManager.I.GetFinalScore();
         if (finalScore >= rankSBorder)
             rank = 'S';
         else if (finalScore >= rankABorder)
@@ -167,9 +167,9 @@ public class ResultCanvasScript : MonoBehaviour {
         yield return new WaitForSeconds(displayInterval * 3);
         finalEvaluationText.gameObject.SetActive(true);
         finalEvaluationText.text = "最終評価:" + rank;
-        AudioManager.Instance.PlayAudio("BGMResult");
+        AudioManager.I.PlayAudio("BGMResult");
 
-        while (AudioManager.Instance.IsPlaying("Result"))
+        while (AudioManager.I.IsPlaying("Result"))
             yield return null;
 
         PressSpaceKeyText.gameObject.SetActive(true);
@@ -186,31 +186,31 @@ public class ResultCanvasScript : MonoBehaviour {
     private void ShowResultNormal()
     {
         clearTimeText.transform.parent.gameObject.SetActive(true);
-        clearTimeText.text = new DateTime(0).Add(ScoreManager.Instance.ClearTime).ToString("mm:ss");
-        clearTimePointText.text = ScoreManager.Instance.GetClearTimePoint().ToString();
+        clearTimeText.text = new DateTime(0).Add(ScoreManager.I.ClearTime).ToString("mm:ss");
+        clearTimePointText.text = ScoreManager.I.GetClearTimePoint().ToString();
 
         coinsText.transform.parent.gameObject.SetActive(true);
-        coinsText.text = ScoreManager.Instance.Coins.ToString();
-        coinsPointText.text = ScoreManager.Instance.GetCoinsPoint().ToString();
+        coinsText.text = ScoreManager.I.Coins.ToString();
+        coinsPointText.text = ScoreManager.I.GetCoinsPoint().ToString();
 
         damagesText.transform.parent.gameObject.SetActive(true);
-        damagesText.text = ScoreManager.Instance.DamagedScore.ToString();
-        damagesPointText.text = ScoreManager.Instance.GetDamagesPoint().ToString();
+        damagesText.text = ScoreManager.I.DamagedScore.ToString();
+        damagesPointText.text = ScoreManager.I.GetDamagesPoint().ToString();
 
         defeatEnemiesText.transform.parent.gameObject.SetActive(true);
-        defeatEnemiesText.text = ScoreManager.Instance.DefeatEnemyScore.ToString();
-        defeatEnemiesPointText.text = ScoreManager.Instance.GetDefeatEnemiesPoint().ToString();
+        defeatEnemiesText.text = ScoreManager.I.DefeatEnemyScore.ToString();
+        defeatEnemiesPointText.text = ScoreManager.I.GetDefeatEnemiesPoint().ToString();
 
         playerDeadTimesText.transform.parent.gameObject.SetActive(true);
-        playerDeadTimesText.text = ScoreManager.Instance.PlayerDeadTimes.ToString();
-        playerDeadTimesPointText.text = ScoreManager.Instance.GetPlayerDeadTimesPoint().ToString();
+        playerDeadTimesText.text = ScoreManager.I.PlayerDeadTimes.ToString();
+        playerDeadTimesPointText.text = ScoreManager.I.GetPlayerDeadTimesPoint().ToString();
 
         totalPointText.transform.parent.parent.gameObject.SetActive(true);
-        totalPointText.text = ScoreManager.Instance.GetFinalScore().ToString();
+        totalPointText.text = ScoreManager.I.GetFinalScore().ToString();
 
         char rank;
 
-        int finalScore = ScoreManager.Instance.GetFinalScore();
+        int finalScore = ScoreManager.I.GetFinalScore();
         if (finalScore >= rankSBorder)
             rank = 'S';
         else if (finalScore >= rankABorder)

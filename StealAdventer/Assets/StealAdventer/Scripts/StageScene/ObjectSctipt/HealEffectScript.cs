@@ -10,7 +10,7 @@ public class HealEffectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        AudioManager.Instance.PlayAudio("SEHeal");
+        AudioManager.I.PlayAudio("SEHeal");
 	}
 	
 	// Update is called once per frame

@@ -131,8 +131,8 @@ public class Golem : NormalEnemy {
 			if(deathTime <= 0){
 				int drop = Random.Range(0, dropProb);
 				if(drop == 0)
-					Instantiate(dropItem, CashedPosition, Quaternion.Euler(0, 90, 0));
-				Instantiate(deathEffect, CashedPosition, Quaternion.Euler(0, 90, 0));
+					Instantiate(dropItem, CashedTransform.position, Quaternion.Euler(0, 90, 0));
+				Instantiate(deathEffect, CashedTransform.position, Quaternion.Euler(0, 90, 0));
 				Destroy(gameObject);
 			}
 			break;
@@ -147,7 +147,7 @@ public class Golem : NormalEnemy {
 			capsuleCollider.radius = 0.3f;
 			capsuleCollider.height = 0.3f;
 			nowState = (int)CharacterState.Death;
-			ScoreManager.Instance.DefeatEnemy();
+			ScoreManager.I.DefeatEnemy();
 		}
 	}
 

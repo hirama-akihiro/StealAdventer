@@ -11,6 +11,6 @@ public class CoinScoreScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.GetComponentInChildren<Text>().text = "×" + ScoreManager.Instance.Coins;
+        this.GetComponentInChildren<Text>().text = "×" + ScoreManager.I.Coins;
 	}
 }

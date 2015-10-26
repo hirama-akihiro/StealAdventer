@@ -93,8 +93,8 @@ public class Minotaur : Enemy {
 
 		//モードチェンジ
 		if (mode == Mode.Normal && nowHP < maxHP / 2) {
-			AudioManager.Instance.PlayAudio("SERoar02");
-			AudioManager.Instance.PlayAudio("SEThunder");
+			AudioManager.I.PlayAudio("SERoar02");
+			AudioManager.I.PlayAudio("SEThunder");
 			mode = Mode.Blitz;
 			blitz.changeBlitz();
 		}
@@ -189,7 +189,7 @@ public class Minotaur : Enemy {
 			{
 				if(myAnimation["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
 					spawnDF = true;
-					AudioManager.Instance.PlayAudio("SERoar01");
+					AudioManager.I.PlayAudio("SERoar01");
 					skillGeneratePoint.GenerateSkill(DF_NormalAttack, LayerNames.EnemySkill);
 				}
 
@@ -202,7 +202,7 @@ public class Minotaur : Enemy {
 			{
 				if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
 					spawnDF = true;
-					AudioManager.Instance.PlayAudio("SERoar01");
+					AudioManager.I.PlayAudio("SERoar01");
 					skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
 				}
 
@@ -242,7 +242,7 @@ public class Minotaur : Enemy {
 			case Attack.Throw://投げ
 			{
 				if(myAnimation["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
-					AudioManager.Instance.PlayAudio("SERoar01");
+					AudioManager.I.PlayAudio("SERoar01");
 					spawnDF = true;
 					skillGeneratePoint.GenerateSkill(Stone, LayerNames.EnemySkill);
 				}
@@ -267,7 +267,7 @@ public class Minotaur : Enemy {
 			{
 				atkTimer -= Time.deltaTime;
 				if(atkTimer <= 0){
-					AudioManager.Instance.PlayAudio("SEThunder");
+					AudioManager.I.PlayAudio("SEThunder");
 					transform.position = new Vector3(player.transform.position.x - 2, b_position.y, transform.position.z);
 					Instantiate(blitz.spark, transform.position, transform.rotation);
 					NormalAttack();
@@ -278,7 +278,7 @@ public class Minotaur : Enemy {
 			{
 				atkTimer -= Time.deltaTime;
 				if(atkTimer <= 0){
-					AudioManager.Instance.PlayAudio("SEThunder");
+					AudioManager.I.PlayAudio("SEThunder");
 					transform.position = new Vector3(player.transform.position.x + 3, b_position.y, transform.position.z);
 					Instantiate(blitz.spark, transform.position, transform.rotation);
 					Stamp();
@@ -290,7 +290,7 @@ public class Minotaur : Enemy {
 				if(rushCount==0){
 					atkTimer -= Time.deltaTime;
 					if(atkTimer <= 0){
-						AudioManager.Instance.PlayAudio("SEThunder");
+						AudioManager.I.PlayAudio("SEThunder");
 						rushCount++;
 						transform.position = new Vector3(player.transform.position.x - 2, b_position.y, transform.position.z);
 						Instantiate(blitz.spark, transform.position, transform.rotation);
@@ -300,8 +300,8 @@ public class Minotaur : Enemy {
 				}
 				else if(rushCount == 1){
 					if(myAnimation["Attack_1"].normalizedTime > 0.35f && spawnDF == false){
-						AudioManager.Instance.PlayAudio("SERoar01");
-						AudioManager.Instance.PlayAudio("SEThunder");
+						AudioManager.I.PlayAudio("SERoar01");
+						AudioManager.I.PlayAudio("SEThunder");
 						spawnDF = true;
 						skillGeneratePoint.GenerateSkill(DF_NormalAttack, LayerNames.EnemySkill);
 						rushCount++;
@@ -315,7 +315,7 @@ public class Minotaur : Enemy {
 				}
 				else if(rushCount == 2){
 					if(myAnimation["Attack_3"].normalizedTime > 0.45f && spawnDF == false){
-						AudioManager.Instance.PlayAudio("SEThunder");
+						AudioManager.I.PlayAudio("SEThunder");
 						spawnDF = true;
 						skillGeneratePoint.GenerateSkill(DF_Stamp, LayerNames.EnemySkill);
 						rushCount++;
@@ -329,8 +329,8 @@ public class Minotaur : Enemy {
 				}
 				else if(rushCount == 3){
 					if(myAnimation["Attack_2"].normalizedTime > 0.45f && spawnDF == false){
-						AudioManager.Instance.PlayAudio("SERoar01");
-						AudioManager.Instance.PlayAudio("SEThunder");
+						AudioManager.I.PlayAudio("SERoar01");
+						AudioManager.I.PlayAudio("SEThunder");
 						spawnDF = true;
 						skillGeneratePoint.GenerateSkill(flamePillar, LayerNames.EnemySkill);
 						rushCount++;
@@ -367,7 +367,7 @@ public class Minotaur : Enemy {
 				}
 
 				if(myAnimation["Attack_2"].normalizedTime > 0.45f && myAnimation["Attack_2"].normalizedTime < 0.60f){
-					AudioManager.Instance.PlayAudio("SEThunder");
+					AudioManager.I.PlayAudio("SEThunder");
 					skillGeneratePoint.GenerateSkill(blitz.BlitzGazor, LayerNames.EnemySkill);
 				}
 				if(!myAnimation.isPlaying){

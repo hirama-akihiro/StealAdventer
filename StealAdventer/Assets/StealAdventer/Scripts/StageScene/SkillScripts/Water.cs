@@ -26,14 +26,14 @@ public class Water : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Invoke("ColliderOn", 0.3f);
-        AudioManager.Instance.PlayAudio(SEName);
+        AudioManager.I.PlayAudio(SEName);
     }
 	
 	// Update is called once per frame
 	void Update () {
         posUpdate();
-        if (!AudioManager.Instance.IsPlaying(SEName))
-            AudioManager.Instance.PlayAudio(SEName);
+        if (!AudioManager.I.IsPlaying(SEName))
+            AudioManager.I.PlayAudio(SEName);
     }
 
     private void posUpdate()
@@ -46,7 +46,7 @@ public class Water : MonoBehaviour {
         }
         else
         {
-            AudioManager.Instance.StopAudio(SEName);
+            AudioManager.I.StopAudio(SEName);
             Destroy(gameObject);
         }
     }
@@ -56,7 +56,7 @@ public class Water : MonoBehaviour {
         //Debug.Log(c.gameObject.layer);
         if (LayerMask.LayerToName(c.gameObject.layer) == "Fire")
         {
-            AudioManager.Instance.PlayAudio("SEShoka");
+            AudioManager.I.PlayAudio("SEShoka");
             effectObject = GameObject.Instantiate(effectObjectOrigin);
             effectObject.transform.position = new Vector3(c.transform.position.x, c.transform.position.y, c.transform.position.z - 0.5f);
             Destroy(effectObject,3.0f);

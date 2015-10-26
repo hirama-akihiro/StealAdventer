@@ -109,7 +109,7 @@ public class UnityChanController : Player {
 		if (nowHP < 0 && mutekiTime < 0)
 		{
 			stock--;
-			ScoreManager.Instance.PlayerDead();
+			ScoreManager.I.PlayerDead();
 			myAnimator.SetBool("GameOver", true);
 			mutekiTime = 1;
 			IsWorping = true;
@@ -121,11 +121,11 @@ public class UnityChanController : Player {
 					StartCoroutine(stockImages[i].GetComponent<FadeOutScript>().StartFadeOut());
 				}
 			}
-			if (stock == 0) { GameEnder.Instance.isGameOver = true; }
+			if (stock == 0) { GameEnder.I.isGameOver = true; }
 			else
 			{
 				isMovable = false;
-				StartCoroutine(RespawnManager.Instance.Respawn());
+				StartCoroutine(RespawnManager.I.Respawn());
 			}
 		}
 
@@ -154,7 +154,7 @@ public class UnityChanController : Player {
 		if (!isMovable) { return; }
 
 		isRun = true;
-		if (UserInput.Instance.UnityChanLeftMove) { nowAngle = CharacterAngle.Left; }
+		if (UserInput.I.UnityChanLeftMove) { nowAngle = CharacterAngle.Left; }
 		else { nowAngle = CharacterAngle.Right; }
 		CharacterRotateAngle(nowAngle);
 		CharacterMove(xSpeed, nowAngle);
@@ -171,7 +171,7 @@ public class UnityChanController : Player {
 		nowState = (int)CharacterState.Jumping;
 		isJump = true;
 		myRigidbody.AddForce(CashedTransform.up * jumpPower, ForceMode.Impulse);
-		SEManager.Instance.PlayAudio("VoiceJump");
+		SEManager.I.PlayAudio("VoiceJump");
 	}
 
 	/// <summary>
@@ -190,9 +190,9 @@ public class UnityChanController : Player {
 		{
 			isMovable = false;
 			CharacterMove(0, nowAngle);
-			AudioManager.Instance.PlayAudio("VoiceLongSkill");
+			AudioManager.I.PlayAudio("VoiceLongSkill");
 		}
-		else { AudioManager.Instance.PlayAudio("VoiceShortSkill"); }	
+		else { AudioManager.I.PlayAudio("VoiceShortSkill"); }	
 	}
 
 	/// <summary>
@@ -216,7 +216,7 @@ public class UnityChanController : Player {
 		IsControllable = false;
 		isMovable = false;
 		isRun = false;
-		AudioManager.Instance.PlayAudio("VoiceShortSkill");		
+		AudioManager.I.PlayAudio("VoiceShortSkill");		
 	}
 
 	/// <summary>
@@ -232,7 +232,7 @@ public class UnityChanController : Player {
 		IsControllable = false;
 		isMovable = false;
 		nowUpperCoolTime = normalHandUpper.GetComponent<SkillParam>().coolTime;
-		AudioManager.Instance.PlayAudio("VoiceNormalAttack");
+		AudioManager.I.PlayAudio("VoiceNormalAttack");
 	}
 
 	/// <summary>
@@ -288,9 +288,9 @@ public class UnityChanController : Player {
 		if (damege <= 0) { return; }
 
 		nowHP -= damege;
-		ScoreManager.Instance.AddDamagedScore(damege);
+		ScoreManager.I.AddDamagedScore(damege);
 		mutekiTime = 1;
-		AudioManager.Instance.PlayAudio("VoiceDamage");
+		AudioManager.I.PlayAudio("VoiceDamage");
 		if (nowHP > 0) { StartCoroutine("MutekiFlashing"); }
 		else { mutekiTime = -1; }
 	}

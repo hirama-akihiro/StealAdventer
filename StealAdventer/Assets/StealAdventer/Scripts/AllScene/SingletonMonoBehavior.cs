@@ -15,7 +15,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 	/// <summary>
 	/// シングルトン変数
 	/// </summary>
-	public static T Instance
+	public static T I
 	{
 		get
 		{
@@ -43,7 +43,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 
 	protected bool CheckInstance()
 	{
-		if (this == Instance) { return this; }
+		if (this == I) { return this; }
 		Destroy(this);
 		return false;
 	}

@@ -15,11 +15,11 @@ public class PurposeSceneManagetr : MonoBehaviour {
 		if (isLoadLevel) {
 			return;
 		}
-		if (UserInput.Instance.PressAnyKey)
+		if (UserInput.I.PressAnyKey)
 		{
 			isLoadLevel = true;
 			// TitleScene -> StageScene
-			AudioManager.Instance.PlayAudio("seButton");
+			AudioManager.I.PlayAudio("seButton");
 			//FadeManager.Instance.LoadLevel("InfoScene", 0.5f);
 			Application.LoadLevel("InfoScene");
 		}

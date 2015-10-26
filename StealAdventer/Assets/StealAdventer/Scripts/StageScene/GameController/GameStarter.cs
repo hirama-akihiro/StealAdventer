@@ -23,7 +23,7 @@ public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		AudioManager.Instance.PlayAudio("BGMFight", AudioManager.PlayMode.Repeat);
+		AudioManager.I.PlayAudio("BGMFight", AudioManager.PlayMode.Repeat);
 		timer = 4f;
 	}
 	
@@ -37,19 +37,19 @@ public class GameStarter : MonoBehaviour {
 			{
 				case "3":
 					countDownImageObject.GetComponent<Image>().sprite = countDownThree;
-					AudioManager.Instance.PlayAudio("VoiceThree");
+					AudioManager.I.PlayAudio("VoiceThree");
 					break;
 				case "2":
 					countDownImageObject.GetComponent<Image>().sprite = countDownTwo;
-					AudioManager.Instance.PlayAudio("VoiceTwo");
+					AudioManager.I.PlayAudio("VoiceTwo");
 					break;
 				case "1":
 					countDownImageObject.GetComponent<Image>().sprite = countDownOne;
-					AudioManager.Instance.PlayAudio("VoiceOne");
+					AudioManager.I.PlayAudio("VoiceOne");
 					break;
 				case "0":
 					countDownImageObject.GetComponent<Image>().sprite = countDownStart;
-					AudioManager.Instance.PlayAudio("VoiceStart");
+					AudioManager.I.PlayAudio("VoiceStart");
 					break;
 			}
 		}
@@ -59,7 +59,7 @@ public class GameStarter : MonoBehaviour {
 		{
 			playerObject.SendMessage("GameStart");
             dataCanvas.SetActive(true);
-            ScoreManager.Instance.GameStart();
+            ScoreManager.I.GameStart();
             GameObject.Find("ElapsedTimeText").GetComponent<ElapsedTimeScript>().GameStart();
 			countDownImageObject.GetComponent<Image>().enabled = false;
 			enabled = false;

@@ -25,13 +25,13 @@ public class Player : Character {
 	
 	// Update is called once per frame
 	protected override void Update () {
-		if (!UserInput.Instance.UnityChanLeftMove && !UserInput.Instance.UnityChanRightMove && OnNoMoveEvent != null) { OnNoMoveEvent(); }
-		if (UserInput.Instance.UnityChanLeftMove || UserInput.Instance.UnityChanRightMove && OnMoveEvent != null) { OnMoveEvent(); }
-		if (UserInput.Instance.UnityChanJump && OnJumpEvent != null) { OnJumpEvent(); }
-		if (UserInput.Instance.UnityChanSkillAttack && OnSkillAttackEvent != null) { OnSkillAttackEvent(); }
-		if (UserInput.Instance.UnityChanSkillAttackEnd && OnSkillAttackEndEvent != null) { OnSkillAttackEndEvent(); }
-		if (UserInput.Instance.UnityChanStealAttack && OnStealHandEvent != null) { OnStealHandEvent(); }
-		if (UserInput.Instance.UnityChanUpperAttack && OnUpperHandEvent != null) { OnUpperHandEvent(); }
+		if (!UserInput.I.UnityChanLeftMove && !UserInput.I.UnityChanRightMove && OnNoMoveEvent != null) { OnNoMoveEvent(); }
+		if (UserInput.I.UnityChanLeftMove || UserInput.I.UnityChanRightMove && OnMoveEvent != null) { OnMoveEvent(); }
+		if (UserInput.I.UnityChanJump && OnJumpEvent != null) { OnJumpEvent(); }
+		if (UserInput.I.UnityChanSkillAttack && OnSkillAttackEvent != null) { OnSkillAttackEvent(); }
+		if (UserInput.I.UnityChanSkillAttackEnd && OnSkillAttackEndEvent != null) { OnSkillAttackEndEvent(); }
+		if (UserInput.I.UnityChanStealAttack && OnStealHandEvent != null) { OnStealHandEvent(); }
+		if (UserInput.I.UnityChanUpperAttack && OnUpperHandEvent != null) { OnUpperHandEvent(); }
 	}
 
 	/// <summary>
@@ -49,7 +49,6 @@ public class Player : Character {
 			yield return new WaitForSeconds(blinkerInterval);
 			mutekiTime -= blinkerInterval * 2;
 		}
-
 		SetRendererEnable(true);
 		gameObject.layer = LayerMask.NameToLayer(LayerNames.Player);
 	}

@@ -108,18 +108,6 @@ public class Character : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// キャッシュPosition
-	/// </summary>
-	public Vector3 CashedPosition
-	{
-		get
-		{
-			if(cashedPosition == null) { cashedPosition = GetComponent<Transform>().position; }
-			return cashedPosition;
-		}
-	}
-
-	/// <summary>
 	/// キャラクターのレンダラー表示，非表示を設定するメソッド
 	/// </summary>
 	/// <param name="alpha"></param>

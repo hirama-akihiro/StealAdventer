@@ -11,8 +11,8 @@ public class TitleSceneTransration : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		AudioManager.Instance.StopAudio();
-		AudioManager.Instance.PlayAudio("BGMTitle");
+		AudioManager.I.StopAudio();
+		AudioManager.I.PlayAudio("BGMTitle");
 	}
 
 	// Update is called once per frame
@@ -20,10 +20,10 @@ public class TitleSceneTransration : MonoBehaviour
 	{
 		if (isLoadLevel) { return; }
 
-		if (UserInput.Instance.PressAnyKey)
+		if (UserInput.I.PressAnyKey)
 		{
 			isLoadLevel = true;
-			AudioManager.Instance.PlayAudio("SEButtonClick");
+			AudioManager.I.PlayAudio("SEButtonClick");
 			FadeManager.Instance.LoadLevel("PurposeScene", 0.5f);
 		}
 	}

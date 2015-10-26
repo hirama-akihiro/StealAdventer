@@ -98,7 +98,7 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager> {
     protected override void Awake()
     {
 		base.Awake();
-        if (this != Instance)
+        if (this != I)
         {
             Destroy(this);
             return;

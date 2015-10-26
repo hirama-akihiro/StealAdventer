@@ -32,7 +32,7 @@ public class ThunderSpark : MonoBehaviour {
 		randPosi_Y = Random.Range (-2, 6);
 		randPosi_Z = Random.Range (-3, 4);
 		if (spawnTime > 0.3 ) {
-			AudioManager.Instance.PlayAudio("SEThunder");
+			AudioManager.I.PlayAudio("SEThunder");
 			Instantiate(spark, new Vector3(this.transform.position.x + randPosi_X, this.transform.position.y + randPosi_Y, this.transform.position.z + randPosi_Z), this.transform.rotation);
 			spawnTime = 0;
 		}

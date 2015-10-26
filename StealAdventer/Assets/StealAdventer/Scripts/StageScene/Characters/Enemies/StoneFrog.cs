@@ -107,7 +107,7 @@ public class StoneFrog : NormalEnemy {
 		{
 			myAnimation.Play("Death");
 			nowState = (int)CharacterState.Death;
-			ScoreManager.Instance.DefeatEnemy();
+			ScoreManager.I.DefeatEnemy();
 		}
 	}
 	

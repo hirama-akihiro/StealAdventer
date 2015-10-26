@@ -25,13 +25,13 @@ public class Fire : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        AudioManager.Instance.PlayAudio(seName);
+        AudioManager.I.PlayAudio(seName);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!AudioManager.Instance.IsPlaying(seName))
-            AudioManager.Instance.PlayAudio(seName);
+        if (!AudioManager.I.IsPlaying(seName))
+            AudioManager.I.PlayAudio(seName);
         posUpdate();
     }
 
@@ -45,7 +45,7 @@ public class Fire : MonoBehaviour {
 		}
 		else
 		{
-			AudioManager.Instance.StopAudio(seName);
+			AudioManager.I.StopAudio(seName);
 			Destroy(gameObject);
 		}
 	}

@@ -33,7 +33,7 @@ public class SkillGetObject : MonoBehaviour {
 				collider.gameObject.GetComponent<Character>().skillObject = skillObjet;
 				dataCanvas.transform.FindChild("Skill").GetComponent<SkillImageScript>().ChangeSkillImage();
 				collider.gameObject.SendMessage("InstansiateGetSkillEffect");
-				AudioManager.Instance.PlayAudio("SESkillGet");
+				AudioManager.I.PlayAudio("SESkillGet");
 			}
 		}
 	}

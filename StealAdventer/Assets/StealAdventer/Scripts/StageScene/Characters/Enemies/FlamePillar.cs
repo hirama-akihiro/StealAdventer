@@ -32,7 +32,7 @@ public class FlamePillar : MonoBehaviour {
 		}
 
 		if (generating && timer <= 0) {
-			AudioManager.Instance.PlayAudio("syaggan");
+			AudioManager.I.PlayAudio("syaggan");
 			Instantiate(fireBurst, transform.position, transform.rotation);
 			generating = false;
 			timer = 1f;

@@ -60,7 +60,7 @@ public class RespawnManager : SingletonMonoBehavior<RespawnManager>{
 			playerObject.GetComponent<UnityChanController>().isMovable = true;
 			playerObject.GetComponent<Rigidbody>().isKinematic = false;
 			playerObject.GetComponent<CapsuleCollider>().isTrigger = false;
-			AudioManager.Instance.PlayAudio("VoiceRespawn");
+			AudioManager.I.PlayAudio("VoiceRespawn");
 		}
 	}
 
@@ -79,7 +79,7 @@ public class RespawnManager : SingletonMonoBehavior<RespawnManager>{
 		playerObject.GetComponent<UnityChanController>().SetRendererEnable(false);
 		playerObject.GetComponent<Rigidbody>().useGravity = false;
 		playerObject.GetComponent<UnityChanController>().SetBool("GameOver", false);
-		TargetCamera.Instance.isCompliance = true;
+		TargetCamera.I.isCompliance = true;
 		minotaur.enabled = false;
 	}
 }

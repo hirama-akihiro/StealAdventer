@@ -22,9 +22,9 @@ public class RespawnPoint : MonoBehaviour {
 		if (isTouch) { return; }
 		string layerName = LayerMask.LayerToName(collider.gameObject.layer);
 		if (layerName != LayerNames.Player && layerName != LayerNames.MutekiPlayer) { return ;}
-		RespawnManager.Instance.respawnPosition = transform.position; 
+		RespawnManager.I.respawnPosition = transform.position; 
 		if (respawnEffect) { Instantiate(respawnEffect,effectPoint.transform.position, transform.rotation); }
-		AudioManager.Instance.PlayAudio("SERespawnPoint");
+		AudioManager.I.PlayAudio("SERespawnPoint");
 		isTouch = true;
 	}
 }

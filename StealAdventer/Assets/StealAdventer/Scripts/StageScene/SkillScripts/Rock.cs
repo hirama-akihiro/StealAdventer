@@ -95,8 +95,8 @@ public class Rock : MonoBehaviour {
 			// 地面落下後は移動させない
 			//myRigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 			//myRigidbody.isKinematic = true;
-			if (!AudioManager.Instance.IsPlaying("Stone"))
-				AudioManager.Instance.PlayAudio("SEStone");
+			if (!AudioManager.I.IsPlaying("Stone"))
+				AudioManager.I.PlayAudio("SEStone");
 		}
 	}
 }

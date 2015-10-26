@@ -60,7 +60,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 			isFinish = true;
 			playerObject.BroadcastMessage("GameEnd");
 			bossObject.SendMessage("GameEnd");
-            SEManager.Instance.PlayAudio("VoiceGameOver");
+            SEManager.I.PlayAudio("VoiceGameOver");
 
 			dataCanvas.SetActive(false);
 
@@ -71,7 +71,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 		// ゲームクリア
 		if(bossObject.GetComponent<Character>().IsDestroy && !isFinish)
 		{
-            ScoreManager.Instance.GameClear();
+            ScoreManager.I.GameClear();
 
 			//resultMessaeText.GetComponent<Text>().text = "Game Clear !!";
 			//pressMessageText.GetComponent<Text>().text = "Press Space Key";
@@ -88,7 +88,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 			isFinish = true;
 			playerObject.BroadcastMessage("GameEnd");
 			bossObject.SendMessage("GameEnd");
-            SEManager.Instance.PlayAudio("VoiceGameClear");
+            SEManager.I.PlayAudio("VoiceGameClear");
 
 			dataCanvas.SetActive(false);
 
@@ -98,7 +98,7 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
 
 		if(isFinish)
 		{
-			if (UserInput.Instance.PressAnyKey && !resultCanvas.activeSelf)
+			if (UserInput.I.PressAnyKey && !resultCanvas.activeSelf)
 			{
                 resultMessaeText.GetComponent<Text>().text = "";
                 pressMessageText.GetComponent<Text>().text = "";
@@ -107,10 +107,10 @@ public class GameEnder : SingletonMonoBehavior<GameEnder> {
                 /* リザルト画面表示 */
                 //resultCanvas.GetComponent<ResultCanvasScript>().ShowResult();
             }
-			else if (UserInput.Instance.PressAnyKey && resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed)
+			else if (UserInput.I.PressAnyKey && resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed)
             {
                 resultCanvas.GetComponent<ResultCanvasScript>().IsDisplayed = false;
-                AudioManager.Instance.StopAudio();
+                AudioManager.I.StopAudio();
 				FadeManager.Instance.LoadLevel("TitleScene", 0.5f);
             }
 

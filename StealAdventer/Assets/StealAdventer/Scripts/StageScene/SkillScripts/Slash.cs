@@ -5,7 +5,7 @@ public class Slash : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        AudioManager.Instance.PlayAudio("SESwing");
+        AudioManager.I.PlayAudio("SESwing");
         Destroy(gameObject, 1.5f);
 	}
 	
