@@ -26,8 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164682}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: -20, y: 0, z: -1.70000005}
-  m_LocalScale: {x: .00999999978, y: .00999999978, z: .00999999978}
+  m_LocalPosition: {x: 60.4960709, y: -7.87659073, z: 15.5751486}
+  m_LocalScale: {x: .00600000052, y: .00600000005, z: .00600000052}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,7 +61,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164682}
-  m_Mesh: {fileID: 4300000, guid: ff2da63943756e84e8cd01e3f50027c6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 7ff93dfdc4b1a2148af3a638a6464dd7, type: 3}
 --- !u!65 &6595970
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b58e61f00f61841b0968e72a683430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healValue: 20
+  healValue: 30
   healEffect: {fileID: 105292, guid: b311b758e10f3e04d8811dc1a6096efc, type: 2}
   moveLimitUnder: -.150000006
   moveLimitOver: .150000006

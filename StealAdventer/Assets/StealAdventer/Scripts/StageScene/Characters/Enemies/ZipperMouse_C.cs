@@ -56,7 +56,7 @@ public class ZipperMouse_C : NormalEnemy
 		{
 			//攻撃発射
 			if(myAnimation["attack"].normalizedTime > 0.35f && !isAttack){
-				skillGeneratePoint.GenerateSkill(skillObject, LayerNames.EnemySkill);
+				skillGeneratePoint.GenerateSkill(skillObject.GetComponent<SkillObjectScript>().attackSkilObject, LayerNames.EnemySkill);
 				isAttack = true;
 			}
 

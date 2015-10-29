@@ -85,6 +85,7 @@ public class Minotaur : Enemy {
 	
 	// Update is called once per frame
 	protected override void Update () {
+		base.Update();
 		blitzTime -= Time.deltaTime;
 		if (mode == Mode.Blitz && blitzTime <= 0) {
 			Instantiate (blitz.spark, transform.position, transform.rotation);
@@ -569,8 +570,7 @@ public class Minotaur : Enemy {
 		{
 			if (mutekiTime < 0)
 			{
-				nowHP -= collision.gameObject.GetComponent<SkillParam>().damege;
-				mutekiTime = 1;
+				DamageMethod(collision.gameObject.GetComponent<SkillParam>().damege);
 			}
 		}
 	}

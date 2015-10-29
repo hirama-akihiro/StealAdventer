@@ -40,10 +40,10 @@ public class Enemy : Character {
 	
 	// Update is called once per frame
 	protected override void Update () {
-	
+
 	}
 
-	private void DamageMethod(int damage)
+	protected void DamageMethod(int damage)
 	{
 		if(mutekiTime > 0) { return; }
 		if(damage <= 0) { return; }

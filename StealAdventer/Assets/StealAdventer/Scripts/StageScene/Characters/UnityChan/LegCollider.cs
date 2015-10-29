@@ -35,10 +35,10 @@ public class LegCollider : MonoBehaviour {
 			minotaur.enabled = true;
 			GameObject.Find("DataCanvas").transform.FindChild("HP(Enemy)").GetComponent<HPGauge>().GaugeDisplay(GameObject.Find("Minotaur"));
 
-			if (AudioManager.I.IsPlaying("Fight"))
+			if (AudioManager.I.IsPlaying("BGMFight"))
 			{
-				AudioManager.I.StopAudio("Fight");
-				AudioManager.I.PlayAudio("bossBattle", AudioManager.PlayMode.Repeat);
+				AudioManager.I.StopAudio("BGMFight");
+				AudioManager.I.PlayAudio("BGMBossBattle", AudioManager.PlayMode.Repeat);
 			}
 		}
 	}

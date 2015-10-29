@@ -19,9 +19,8 @@ public class PurposeSceneManagetr : MonoBehaviour {
 		{
 			isLoadLevel = true;
 			// TitleScene -> StageScene
-			AudioManager.I.PlayAudio("seButton");
-			//FadeManager.Instance.LoadLevel("InfoScene", 0.5f);
-			Application.LoadLevel("InfoScene");
+			AudioManager.I.PlayAudio("SEButtonClick");
+			FadeManager.Instance.LoadLevel("InfoScene", 0.5f);
 		}
 	}
 }

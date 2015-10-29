@@ -41,7 +41,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -66,7 +66,8 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightmapSnapshot: {fileID: 0}
+  m_LightmapSnapshot: {fileID: 112000001, guid: 4fe4acec8221db34a80aad7d4f24307b,
+    type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
 NavMeshSettings:
@@ -12865,12 +12866,13 @@ MonoBehaviour:
   ySpeed: 3
   jumpPower: 7
   skillObject: {fileID: 0}
+  blinkerInterval: 0
+  deathEffect: {fileID: 0}
+  dropItem: {fileID: 0}
   DF_NormalAttack: {fileID: 112102, guid: e7da25802866cfb45ae36acf1cff287e, type: 2}
   DF_Stamp: {fileID: 113184, guid: c0ab82d83d75fb04ab60a0c24595c77f, type: 2}
   Stone: {fileID: 150878, guid: 5ffa06588ebb04345b03743575b7f520, type: 2}
   flamePillar: {fileID: 136424, guid: b171062efa639b94681dcbea92cde983, type: 2}
-  blinkerInterval: 0
-  mutekiTime: 0
 --- !u!54 &1997296147
 Rigidbody:
   m_ObjectHideFlags: 0
