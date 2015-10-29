@@ -87,7 +87,7 @@ public class UnityChanController : Player {
 		base.Awake();
 		nowAngle = CharacterAngle.Right;
 		nowState = (int)CharacterState.Idling;
-		coolTimeImage = coolTimeRateObject.GetComponent<Image>();
+		if (coolTimeRateObject != null) { coolTimeImage = coolTimeRateObject.GetComponent<Image>(); }
 		myAnimator = GetComponent<Animator>();
 		myRigidbody = GetComponent<Rigidbody>();
 		isJump = false;
@@ -264,7 +264,10 @@ public class UnityChanController : Player {
 			// 静止状態なら移動速度を止める(横方向のみ)
 			if (nowState == (int)CharacterState.Idling)
 			{
-				myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y, myRigidbody.velocity.z);
+				if (myRigidbody != null)
+				{
+					myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y, myRigidbody.velocity.z);
+				}
 			}
 		}
 	}
@@ -358,7 +361,7 @@ public class UnityChanController : Player {
 	/// </summary>
 	/// <param name="animName"></param>
 	/// <param name="tf"></param>
-	public void SetBool(string animName, bool tf) { myAnimator.SetBool(animName, tf); }
+	public void SetBool(string animName, bool tf) { if (myAnimator != null) { myAnimator.SetBool(animName, tf); } }
 
 	/// <summary>
 	/// ユーザの操作が可能かどうか
